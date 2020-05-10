@@ -30,3 +30,22 @@ bool Repository::setPathOfDatabase(QString path)
         return false;
     }
 }
+
+bool Repository::createTablesIfNotExist()
+{
+    QSqlQuery query;
+
+    //TABLE MEALS
+    if(!query.exec("CREATE TABLE IF NOT EXISTS meals(id integer unique primary key autoincrement, name text, date date)"))
+        return false;
+    //TABLE PRODUCTS
+    if(!query.exec("CREATE TABLE IF NOT EXISTS products(id integer unique primary key autoincrement, name text, "
+                  "kcal int, protein numeric(6,2), fats numeric(6,2), carbohydrates numeric(6,2) )"))
+        return false;
+    //TABLE MEALSPRODUCTS
+    if(!query.exec("CREATE TABLE IF NOT EXISTS mealsProducts(id integer unique primary key autoincrement, "
+                   "idMeal integer REFERENCES meals(id), idProduct integer REFERENCES products(id), grams int)"))
+        return false;
+
+    return true;
+}

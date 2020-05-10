@@ -19,6 +19,8 @@ public:
     virtual ~Repository();
 
     bool setPathOfDatabase(QString path); //setting path to file of database
+
+    bool createTablesIfNotExist(); //creating table 'meal' if not exist
 };
 
 #endif // REPOSITORY_H

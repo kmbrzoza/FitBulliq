@@ -24,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
        qDebug()<<"Polaczono z baza danych";
    else
        qDebug()<<"NIE polaczono z baza danych";
+   if(repo.createTablesIfNotExist())
+       qDebug()<<"Stworzono tabele";
+   else
+       qDebug()<<"PROBLEM z utworzeniem tabeli";
 
 
 }
