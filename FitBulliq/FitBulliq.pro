@@ -18,10 +18,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    meal.cpp \
+    product.cpp \
     repository.cpp
 
 HEADERS += \
     mainwindow.h \
+    meal.h \
+    product.h \
     repository.h
 
 FORMS += \

@@ -7,6 +7,8 @@
 #define MAINWINDOW_H
 
 #include "repository.h"
+#include "meal.h"
+#include "product.h"
 
 #include <QMainWindow>
 #include <QtSql>
