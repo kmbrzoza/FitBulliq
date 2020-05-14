@@ -7,6 +7,9 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
+#include "meal.h"
+#include "product.h"
+
 #include <QtSql>
 
 class Repository
@@ -22,10 +25,10 @@ public:
 
     bool createTablesIfNotExist(); //creating tables if not exist
 
-    bool addMeal(QString nameMeal, QDate date); //adding meal to database (table meals)
+    bool addMeal(Meal meal); //adding meal to database (table meals)
     //adding product to database (table products), DOUBLES (xxxx.xx) where x is digit
-    bool addProduct(QString nameProduct, unsigned int kcal, double protein, double fats, double carbohydrates);
-    bool addMealProduct(unsigned int idMeal, unsigned int idProduct, unsigned int grams); //adding Meal-Product to database (table mealsProducts)
+    bool addProduct(Product product);
+    bool addMealProduct(Meal meal, Product product, unsigned int grams); //adding Meal-Product to database (table mealsProducts)
 
 };
 

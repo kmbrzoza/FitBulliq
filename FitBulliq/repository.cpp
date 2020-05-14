@@ -51,16 +51,16 @@ bool Repository::createTablesIfNotExist()
     return true;
 }
 
-bool Repository::addMeal(QString nameMeal, QDate date)
+bool Repository::addMeal(Meal meal)
 {
     QSqlQuery query;
-    if(query.exec("insert into meals (name, date) values('"+nameMeal+"','"+date.toString("yyyy-MM-dd")+"')"))
+    if(query.exec("insert into meals (name, date) values('"+meal.getName()+"','"+meal.getDate().toString("yyyy-MM-dd")+"')"))
         return true;
     else
         return false;
 }
 
-bool Repository::addProduct(QString nameProduct, unsigned int kcal, double protein, double fats, double carbohydrates)
+bool Repository::addProduct(Product product)
 {
     //DOUBLES ARE (xxxx.xx) where x is digit
 
@@ -71,20 +71,24 @@ bool Repository::addProduct(QString nameProduct, unsigned int kcal, double prote
     //QString carbohydratesString = QString::number(carbohydrates);
 
     QSqlQuery query;
-    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+nameProduct+"', '"+kcal+"', "
-                  "'"+protein+"', '"+fats+"', '"+carbohydrates+"')"))
+    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+product.getName()+"', '"+product.getKcal()+"', "
+                  "'"+product.getProtein()+"', '"+product.getFats()+"', '"+product.getCarbohydrates()+"')"))
         return true;
     else
         return false;
 }
 
-bool Repository::addMealProduct(unsigned int idMeal, unsigned int idProduct, unsigned int grams)
+bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
 {
-    //QSqlQuery query;
-    //if(query.exec("insert into mealsProducts (idMeal, idProduct, grams) values ('"+idMeal+"', '"+idProduct+"', '"+grams+"')"))
-        //return true;
-    //else
-        //return false;
+    QSqlQuery query;
+    query.prepare("insert into mealsProducts (idMeal, idProduct, grams) values (:idMeal, :idProduct, :grams)");
+    query.bindValue(":idMeal", meal.getId());
+    query.bindValue(":idProduct", product.getId());
+    query.bindValue(":grams", grams);
+    if(query.exec())
+        return true;
+    else
+        return false;
 }
 
 
