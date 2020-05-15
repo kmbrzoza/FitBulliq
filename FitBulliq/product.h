@@ -19,10 +19,13 @@ private:
     double protein;
     double fats;
     double carbohydrates;
+
+    int grams;
     
 public:
     Product();
     Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates);
+    Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates, int grams);
     virtual ~Product();
     
     //SETTERS
@@ -32,6 +35,9 @@ public:
     void setProtein(double protein);
     void setFats(double fats);
     void setCarbohydrates(double carbohydrates);
+
+    void setGrams(double grams);
+
     //GETTERS
     unsigned int getId();
     QString getName();
@@ -39,6 +45,8 @@ public:
     double getProtein();
     double getFats();
     double getCarbohydrates();
+
+    int getGrams();
 };
 
 #endif // PRODUCT_H

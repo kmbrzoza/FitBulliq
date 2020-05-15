@@ -24,6 +24,11 @@ Product::Product(unsigned int id, QString name, unsigned int kcal, double protei
     this->fats=fats;
     this->carbohydrates=carbohydrates;
 }
+Product::Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates, int grams)
+    :Product(id, name, kcal, protein, fats, carbohydrates)
+{
+    this->grams=grams;
+}
 
 //SETTERS
 void Product::setId(unsigned int id)
@@ -51,6 +56,11 @@ void Product::setCarbohydrates(double carbohydrates)
     this->carbohydrates=carbohydrates;
 }
 
+void Product::setGrams(double grams)
+{
+    this->grams=grams;
+}
+
 //GETTERS
 unsigned int Product::getId()
 {
@@ -75,4 +85,9 @@ double Product::getFats()
 double Product::getCarbohydrates()
 {
     return carbohydrates;
+}
+
+int Product::getGrams()
+{
+    return grams;
 }

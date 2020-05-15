@@ -11,6 +11,9 @@
 #include <QString>
 #include <QDate>
 
+#include "product.h"
+
+
 class Meal
 {
 private:
@@ -31,6 +34,7 @@ public:
     unsigned int getId();
     QString getName();
     QDate getDate();
+    QList<Product> listProduct;
 };
 
 #endif // MEAL_H
