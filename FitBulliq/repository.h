@@ -28,15 +28,17 @@ public:
 
 
     bool addMeal(Meal meal); //adding meal to database (table meals)
+    QList<Meal> getMealsByDate(QDate date); //getting meal by date
+    bool setProductsToMealsByDate(QList<Meal>&); //setting products to meals (by date)
 
     //adding new product to database (table products), DOUBLES (xxxx.xx) where x is digit
     bool addProduct(Product product);
-    QList<Product> getProductsByText(QString text);
+    QList<Product> getProductsByText(QString text); //returns list of products where name is *text*
 
     bool addMealProduct(Meal meal, Product product, unsigned int grams); //adding Meal-Product to database (table mealsProducts)xw
+    Product getWhichProductRemove(Meal meal, int indexOfRow); // returns which product delete, indexOfRow is index of row which user clicked
+    bool removeMealProduct(Meal& meal, Product productToRemove); //removing product from meal
 
-    QList<Meal> getMealsByDate(QDate date); //
-    bool setProductsToMealsByDate(QList<Meal>&);
 };
 
 #endif // REPOSITORY_H

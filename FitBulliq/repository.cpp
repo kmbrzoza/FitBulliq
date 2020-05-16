@@ -60,51 +60,6 @@ bool Repository::addMeal(Meal meal)
         return false;
 }
 
-bool Repository::addProduct(Product product)
-{
-    //DOUBLES ARE (xxxx.xx) where x is digit
-
-    QSqlQuery query;
-    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+product.getName()+"', '"+product.getKcal()+"', "
-                  "'"+product.getProtein()+"', '"+product.getFats()+"', '"+product.getCarbohydrates()+"')"))
-        return true;
-    else
-        return false;
-}
-
-QList<Product> getProductsByText(QString text)
-{
-    QList<Product> listProducts;
-    QSqlQuery query;
-    query.prepare("SELECT * from products where name like '%:text%'");
-    query.bindValue(":text", text);
-    if(query.exec())
-    {
-        while(query.next())
-        {
-            listProducts.append(Product(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(),
-                                        query.value(3).toDouble(), query.value(4).toDouble(), query.value(5).toDouble()));
-        }
-    }
-    else
-        qDebug()<<"Error in getting products by text";
-
-    return listProducts;
-}
-
-bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
-{
-    QSqlQuery query;
-    query.prepare("insert into mealsProducts (idMeal, idProduct, grams) values (:idMeal, :idProduct, :grams)");
-    query.bindValue(":idMeal", meal.getId());
-    query.bindValue(":idProduct", product.getId());
-    query.bindValue(":grams", grams);
-    if(query.exec())
-        return true;
-    else
-        return false;
-}
-
 
 QList<Meal> getMealsByDate(QDate date)
 {
@@ -166,6 +121,95 @@ bool setProductsToMealsByDate(QList<Meal>& mealListByDate)
 
     return true;
 }
+
+
+bool Repository::addProduct(Product product)
+{
+    //DOUBLES ARE (xxxx.xx) where x is digit
+
+    QSqlQuery query;
+    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+product.getName()+"', '"+product.getKcal()+"', "
+                  "'"+product.getProtein()+"', '"+product.getFats()+"', '"+product.getCarbohydrates()+"')"))
+        return true;
+    else
+        return false;
+}
+
+QList<Product> getProductsByText(QString text)
+{
+    QList<Product> listProducts;
+    QSqlQuery query;
+    query.prepare("SELECT * from products where name like '%:text%'");
+    query.bindValue(":text", text);
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            listProducts.append(Product(query.value(0).toInt(), query.value(1).toString(), query.value(2).toInt(),
+                                        query.value(3).toDouble(), query.value(4).toDouble(), query.value(5).toDouble()));
+        }
+    }
+    else
+        qDebug()<<"Error in getting products by text";
+
+    return listProducts;
+}
+
+bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
+{
+    QSqlQuery query;
+    query.prepare("insert into mealsProducts (idMeal, idProduct, grams) values (:idMeal, :idProduct, :grams)");
+    query.bindValue(":idMeal", meal.getId());
+    query.bindValue(":idProduct", product.getId());
+    query.bindValue(":grams", grams);
+    if(query.exec())
+        return true;
+    else
+        return false;
+}
+
+Product getWhichProductRemove(Meal meal, int indexOfRow)
+{
+    Product product = meal.listProduct[indexOfRow];
+    return product;
+}
+
+bool removeMealProduct(Meal& meal, Product productToRemove)
+{
+    bool statusDeleted=false;
+
+    QSqlQuery query;
+
+    int index=0;
+
+    foreach(Product product, meal.listProduct)
+    {
+        //If id = id and grams = grams then delete and break the loop
+        if(productToRemove.getId() == product.getId() && productToRemove.getGrams()==product.getGrams())
+        {
+            query.prepare("DELETE from mealsProducts where idMeal=:idMeal and idProduct=:idProduct and grams=:grams");
+            query.bindValue(":idMeal", meal.getId());
+            query.bindValue(":idProduct", product.getId());
+            query.bindValue(":grams", product.getGrams());
+
+            if(query.exec())
+            {
+                meal.listProduct.removeAt(index);
+
+                statusDeleted=true;
+            }
+            else
+            {
+                qDebug()<<"ERROR with deleting product from meal (bool removeMealProduct())";
+            }
+
+        }
+
+        index++;
+    }
+    return statusDeleted;
+}
+
 
 
 
