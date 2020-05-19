@@ -38,10 +38,10 @@ public:
 
     QList<Product> listProduct;
 
-    unsigned int getKcal();
-    double getProtein();
-    double getFats();
-    double getCarbohydrates();
+    unsigned int getKcalMeal();
+    double getProteinMeal();
+    double getFatsMeal();
+    double getCarbohydratesMeal();
 };
 
 #endif // MEAL_H

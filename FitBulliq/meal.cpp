@@ -53,7 +53,7 @@ QDate Meal::getDate()
     return date;
 }
 
-unsigned int Meal::getKcal()
+unsigned int Meal::getKcalMeal()
 {
     unsigned int sum=0;
     for(int i=0; i<listProduct.size(); i++)
@@ -63,7 +63,7 @@ unsigned int Meal::getKcal()
     return sum;
 }
 
-double Meal::getProtein()
+double Meal::getProteinMeal()
 {
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)
@@ -75,7 +75,7 @@ double Meal::getProtein()
     return sum;
 }
 
-double Meal::getFats()
+double Meal::getFatsMeal()
 {
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)
@@ -87,7 +87,7 @@ double Meal::getFats()
     return sum;
 }
 
-double Meal::getCarbohydrates()
+double Meal::getCarbohydratesMeal()
 {
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)

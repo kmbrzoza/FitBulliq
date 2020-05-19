@@ -297,8 +297,50 @@ bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
     }
     return statusDeleted;
 }
+//////////////////////////////////
 
 
 
+
+
+unsigned int Repository::getKcalDay(QList<Meal> listMeal)
+{
+    unsigned int sum=0;
+    foreach(Meal meal, listMeal)
+    {
+        sum = sum + meal.getKcalMeal();
+    }
+    return sum;
+}
+
+double Repository::getProteinDay(QList<Meal> listMeal)
+{
+    double sum=0;
+    foreach(Meal meal, listMeal)
+    {
+        sum = sum + meal.getProteinMeal();
+    }
+    return sum;
+}
+
+double Repository::getFatsDay(QList<Meal> listMeal)
+{
+    double sum=0;
+    foreach(Meal meal, listMeal)
+    {
+        sum = sum + meal.getFatsMeal();
+    }
+    return sum;
+}
+
+double Repository::getCarbohydratesDay(QList<Meal> listMeal)
+{
+    double sum=0;
+    foreach(Meal meal, listMeal)
+    {
+        sum = sum + meal.getCarbohydratesMeal();
+    }
+    return sum;
+}
 
 

@@ -41,6 +41,12 @@ public:
     Product getWhichProductRemove(Meal meal, int indexOfRow); // returns which product delete, indexOfRow is index of row which user clicked
     bool removeMealProduct(Meal& meal, Product productToRemove); //removing product from meal
 
+
+    ////////////
+    unsigned int getKcalDay(QList<Meal> listMeal);
+    double getProteinDay(QList<Meal> listMeal);
+    double getFatsDay(QList<Meal> listMeal);
+    double getCarbohydratesDay(QList<Meal> listMeal);
 };
 
 #endif // REPOSITORY_H
