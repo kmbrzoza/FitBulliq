@@ -35,11 +35,12 @@ public:
 
     bool addProduct(Product product); //adding new product to database (table products), DOUBLES (xxxx.xx) where x is digit
     QList<Product> getProductsByText(QString text); //returns list of products where name is *text*
-    bool removeProduct(QList<Product> listProduct, unsigned int indexOfRow);//this listProduct should be returned by getProductsByText!!!!!!!
+    Product getProductByTextIndex(QList<Product> listProduct, unsigned int indexOfRow); //listProduct is a list from getProductsByText; index is a row clicked by user
+    bool removeProduct(Product product);//this product is returned by getProductByTextIndex; removing from DataBase
 
-    bool addMealProduct(Meal& meal, Product product, unsigned int grams); //adding Meal-Product to database (table mealsProducts)xw
+    bool addMealProduct(Meal& meal, Product product, unsigned int grams); //adding Meal-Product to database (table mealsProducts); product is returned by getProductByTextIndex
     Product getWhichProductRemove(Meal meal, int indexOfRow); // returns which product delete, indexOfRow is index of row which user clicked
-    bool removeMealProduct(Meal& meal, Product productToRemove); //removing product from meal
+    bool removeMealProduct(Meal& meal, Product productToRemove); //removing product from meal, productToRemove is returned by getWhichProductRemove()
 
 
     ////////////

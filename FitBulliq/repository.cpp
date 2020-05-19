@@ -213,13 +213,19 @@ QList<Product> Repository::getProductsByText(QString text)
 }
 
 
-bool Repository::removeProduct(QList<Product> listProduct, unsigned int indexOfRow)
+Product Repository::getProductByTextIndex(QList<Product> listProduct, unsigned int indexOfRow)
+{
+    return listProduct[indexOfRow];
+}
+
+
+bool Repository::removeProduct(Product product)
 {
     //listProduct should be list returned by getProductsByText()!!!!!
 
     QSqlQuery query;
     query.prepare("DELETE from products where id=:idProduct");
-    query.bindValue(":idProduct", listProduct[indexOfRow].getId());
+    query.bindValue(":idProduct", product.getId());
     if(query.exec())
     {
         return true;
