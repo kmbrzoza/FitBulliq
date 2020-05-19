@@ -16,6 +16,8 @@ Repository::Repository()
 Repository::~Repository()
 {
 }
+/////////////////////////////////////////////////
+
 
 bool Repository::setPathOfDatabase(QString path)
 {
@@ -31,6 +33,7 @@ bool Repository::setPathOfDatabase(QString path)
         return false;
     }
 }
+
 
 bool Repository::createTablesIfNotExist()
 {
@@ -50,18 +53,31 @@ bool Repository::createTablesIfNotExist()
 
     return true;
 }
+///////////////////////////////////////////////////
 
-bool Repository::addMeal(Meal meal)
+
+
+
+
+
+bool Repository::addMeal(QList<Meal>& listMeal, Meal meal)
 {
     QSqlQuery query;
     if(query.exec("insert into meals (name, date) values('"+meal.getName()+"','"+meal.getDate().toString("yyyy-MM-dd")+"')"))
+    {
+        query.next();
+        meal.setId(query.lastInsertId().toInt());
+        listMeal.append(meal);
         return true;
+    }
     else
+    {
         return false;
+    }
 }
 
 
-QList<Meal> getMealsByDate(QDate date)
+QList<Meal> Repository::getMealsByDate(QDate date)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM meals where date='"+date.toString("yyyy-MM-dd")+"'");
@@ -74,11 +90,12 @@ QList<Meal> getMealsByDate(QDate date)
     return mealListByDate;
 }
 
-bool setProductsToMealsByDate(QList<Meal>& mealListByDate)
+
+bool Repository::setProductsToMealsByDate(QList<Meal>& mealListByDate)
 {
     QSqlQuery queryForIdProduct;
     QSqlQuery queryForProduct;
-    for(int i=0; i<mealListByDate.size(); i++)//Loop setting products to all meals which are in selected date
+    for(int i=0; i<mealListByDate.size(); i++)//Loop setting products to all meals
     {
         //Preparing select to get idProduct witch is in relation with idMeal
         queryForIdProduct.prepare("SELECT mp.idProduct, mp.grams from mealsProducts mp INNER JOIN products p ON mp.idProduct=p.id "
@@ -122,6 +139,45 @@ bool setProductsToMealsByDate(QList<Meal>& mealListByDate)
     return true;
 }
 
+bool Repository::removeMeal(QList<Meal>& listMeal, unsigned int indexOfComboBox)
+{
+    QSqlQuery query;
+
+    while(listMeal[indexOfComboBox].listProduct.size()>0)
+    {
+        //removing from listMeal last product from .listProduct while size > 0 (want remove all)
+        //if removing all the time the last one, on the finish size = 0
+        if(removeMealProduct(listMeal[indexOfComboBox], listMeal[indexOfComboBox].listProduct[listMeal[indexOfComboBox].listProduct.size()-1]))
+        {
+            //removed
+        }
+        else
+        {
+            qDebug()<<"ERROR with deleting last product from meal: removeMeal()->removeMealProduct()";
+            return false;
+        }
+    }
+
+    query.prepare("DELETE from meals where id=:idMeal");
+    query.bindValue(":idMeal", listMeal[indexOfComboBox].getId());
+
+    if(query.exec())
+    {
+        listMeal.removeAt(indexOfComboBox); //removing selected meal
+        return true;
+    }
+    else
+    {
+        qDebug()<<"ERROR with deleting meal: removeMeal()";
+        return false;
+    }
+}
+////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 bool Repository::addProduct(Product product)
 {
@@ -135,7 +191,8 @@ bool Repository::addProduct(Product product)
         return false;
 }
 
-QList<Product> getProductsByText(QString text)
+
+QList<Product> Repository::getProductsByText(QString text)
 {
     QList<Product> listProducts;
     QSqlQuery query;
@@ -155,7 +212,32 @@ QList<Product> getProductsByText(QString text)
     return listProducts;
 }
 
-bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
+
+bool Repository::removeProduct(QList<Product> listProduct, unsigned int indexOfRow)
+{
+    //listProduct should be list returned by getProductsByText()!!!!!
+
+    QSqlQuery query;
+    query.prepare("DELETE from products where id=:idProduct");
+    query.bindValue(":idProduct", listProduct[indexOfRow].getId());
+    if(query.exec())
+    {
+        return true;
+    }
+    else
+    {
+        qDebug()<<"ERROR with deleting product: removeProduct()";
+        return false;
+    }
+}
+///////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+bool Repository::addMealProduct(Meal& meal, Product product, unsigned int grams)
 {
     QSqlQuery query;
     query.prepare("insert into mealsProducts (idMeal, idProduct, grams) values (:idMeal, :idProduct, :grams)");
@@ -163,18 +245,24 @@ bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
     query.bindValue(":idProduct", product.getId());
     query.bindValue(":grams", grams);
     if(query.exec())
+    {
+        product.setGrams(grams);
+        meal.listProduct.append(product);
         return true;
+    }
     else
         return false;
 }
 
-Product getWhichProductRemove(Meal meal, int indexOfRow)
+
+Product Repository::getWhichProductRemove(Meal meal, int indexOfRow)
 {
     Product product = meal.listProduct[indexOfRow];
     return product;
 }
 
-bool removeMealProduct(Meal& meal, Product productToRemove)
+
+bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
 {
     bool statusDeleted=false;
 

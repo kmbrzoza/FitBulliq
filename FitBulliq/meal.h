@@ -23,6 +23,7 @@ private:
 
 public:
     Meal();
+    Meal(QString name, QDate date);
     Meal(unsigned int id, QString name, QDate date);
     virtual ~Meal();
 
@@ -34,7 +35,13 @@ public:
     unsigned int getId();
     QString getName();
     QDate getDate();
+
     QList<Product> listProduct;
+
+    unsigned int getKcal();
+    double getProtein();
+    double getFats();
+    double getCarbohydrates();
 };
 
 #endif // MEAL_H

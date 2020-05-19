@@ -15,11 +15,15 @@ Meal::~Meal()
 {
 }
 
-Meal::Meal(unsigned int id, QString name, QDate date)
+Meal::Meal(QString name, QDate date)
 {
-    this->id=id;
     this->name=name;
     this->date=date;
+}
+
+Meal::Meal(unsigned int id, QString name, QDate date):Meal(name, date)
+{
+    this->id=id;
 }
 
 //SETTERS
@@ -47,4 +51,50 @@ QString Meal::getName()
 QDate Meal::getDate()
 {
     return date;
+}
+
+unsigned int Meal::getKcal()
+{
+    unsigned int sum=0;
+    for(int i=0; i<listProduct.size(); i++)
+    {
+        sum = sum + (listProduct[i].getKcal() * (listProduct[i].getGrams() * 0.01));
+    }
+    return sum;
+}
+
+double Meal::getProtein()
+{
+    double sum=0;
+    for(int i=0; i<listProduct.size(); i++)
+    {
+        sum = sum + (listProduct[i].getProtein() * (listProduct[i].getGrams() * 0.01));
+    }
+    QString temp = QString::number(sum, 'f', 2);
+    sum = temp.toDouble();
+    return sum;
+}
+
+double Meal::getFats()
+{
+    double sum=0;
+    for(int i=0; i<listProduct.size(); i++)
+    {
+        sum = sum + (listProduct[i].getFats() * (listProduct[i].getGrams() * 0.01));
+    }
+    QString temp = QString::number(sum, 'f', 2);
+    sum = temp.toDouble();
+    return sum;
+}
+
+double Meal::getCarbohydrates()
+{
+    double sum=0;
+    for(int i=0; i<listProduct.size(); i++)
+    {
+        sum = sum + (listProduct[i].getCarbohydrates() * (listProduct[i].getGrams() * 0.01));
+    }
+    QString temp = QString::number(sum, 'f', 2);
+    sum = temp.toDouble();
+    return sum;
 }
