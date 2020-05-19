@@ -94,20 +94,20 @@ unsigned int Product::getGrams()
 
 unsigned int Product::getKcalByGrams()
 {
-    return (getKcal()*(grams*0.01));
+    return (getKcal()*(getGrams()*0.01));
 }
 
 double Product::getProteinByGrams()
 {
-    return (getProtein()*(grams*0.01));
+    return (getProtein()*(getGrams()*0.01));
 }
 
 double Product::getFatsByGrams()
 {
-    return (getFats()*(grams*0.01));
+    return (getFats()*(getGrams()*0.01));
 }
 
 double Product::getCarbohydratesByGrams()
 {
-    return (getCarbohydrates()*(grams*0.01));
+    return (getCarbohydrates()*(getGrams()*0.01));
 }

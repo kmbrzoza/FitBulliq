@@ -58,7 +58,7 @@ unsigned int Meal::getKcalMeal()
     unsigned int sum=0;
     for(int i=0; i<listProduct.size(); i++)
     {
-        sum = sum + (listProduct[i].getKcal() * (listProduct[i].getGrams() * 0.01));
+        sum = sum + listProduct[i].getKcalByGrams();
     }
     return sum;
 }
@@ -68,10 +68,8 @@ double Meal::getProteinMeal()
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)
     {
-        sum = sum + (listProduct[i].getProtein() * (listProduct[i].getGrams() * 0.01));
+        sum = sum + listProduct[i].getProteinByGrams();
     }
-    QString temp = QString::number(sum, 'f', 2);
-    sum = temp.toDouble();
     return sum;
 }
 
@@ -80,10 +78,8 @@ double Meal::getFatsMeal()
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)
     {
-        sum = sum + (listProduct[i].getFats() * (listProduct[i].getGrams() * 0.01));
+        sum = sum + listProduct[i].getFatsByGrams();
     }
-    QString temp = QString::number(sum, 'f', 2);
-    sum = temp.toDouble();
     return sum;
 }
 
@@ -92,9 +88,7 @@ double Meal::getCarbohydratesMeal()
     double sum=0;
     for(int i=0; i<listProduct.size(); i++)
     {
-        sum = sum + (listProduct[i].getCarbohydrates() * (listProduct[i].getGrams() * 0.01));
+        sum = sum + listProduct[i].getCarbohydratesByGrams();
     }
-    QString temp = QString::number(sum, 'f', 2);
-    sum = temp.toDouble();
     return sum;
 }
