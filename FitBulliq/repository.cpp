@@ -219,21 +219,28 @@ bool Repository::removeProduct(Product product)
 {
     //DODAĆ TUTAJ USUWANIE DANEGO PRODUKTU Z INNYCH POSIŁKOW NAJPIERW!!!!
     QSqlQuery query;
-    query.prepare("DELETE from products where id=:idProduct");
-    query.bindValue(":idProduct", product.getId());
-    if(query.exec())
+
+    query.prepare("DELETE from mealsProducts where idProduct=:idProd");
+    query.bindValue(":idProd", product.getId());
+
+    if(!query.exec())
     {
-        return true;
-    }
-    else
-    {
-        qDebug()<<"ERROR with deleting product: removeProduct()";
+        qDebug()<<"ERROR with deleting in mealsProducts product: removeProduct()";
         return false;
     }
+
+    query.prepare("DELETE from products where id=:idProduct");
+    query.bindValue(":idProduct", product.getId());
+
+    if(!query.exec())
+    {
+        qDebug()<<"ERROR with deleting in products product: removeProduct()";
+        return false;
+    }
+
+    return true;
 }
 ///////////////////////////////////////////////////////////////////
-
-
 
 
 
@@ -254,43 +261,6 @@ bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
 }
 
 
-/* EDITED below
-bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
-{
-    bool statusDeleted=false;
-
-    QSqlQuery query;
-
-    int index=0;
-
-    foreach(Product product, meal.listProduct)
-    {
-        //If id = id and grams = grams then delete and break the loop
-        if(productToRemove.getId() == product.getId() && productToRemove.getGrams()==product.getGrams())
-        {
-            query.prepare("DELETE from mealsProducts where idMeal=:idMeal and idProduct=:idProduct and grams=:grams");
-            query.bindValue(":idMeal", meal.getId());
-            query.bindValue(":idProduct", product.getId());
-            query.bindValue(":grams", product.getGrams());
-
-            if(query.exec())
-            {
-                meal.listProduct.removeAt(index);
-
-                statusDeleted=true;
-            }
-            else
-            {
-                qDebug()<<"ERROR with deleting product from meal (bool removeMealProduct())";
-            }
-
-        }
-
-        index++;
-    }
-    return statusDeleted;
-} EDITED below */
-// USED OPERATOR==
 bool Repository::removeMealProduct(Meal meal, Product productToRemove)
 {
     QSqlQuery query;
