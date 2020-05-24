@@ -5,9 +5,10 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+
 #include <QDebug>
 
-#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,14 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget::setWindowTitle("FitBulliq"); //setting name of the window
 
     //BK - connecting with database
-   if(repo.setPathOfDatabase("database.db"))
-       qDebug()<<"Polaczono z baza danych";
-   else
-       qDebug()<<"NIE polaczono z baza danych";
-   if(repo.createTablesIfNotExist())
-       qDebug()<<"Stworzono tabele";
-   else
-       qDebug()<<"PROBLEM z utworzeniem tabeli";
+    service.connectWithDatabase("database.db");
 
 
 }

@@ -5,6 +5,7 @@
 #include "meal.h"
 #include "repository.h"
 
+
 class Service
 {
 private:
@@ -25,8 +26,7 @@ public:
     QDate getCurrentDate();
 
     //Database
-    bool setPathOfDatabase(QString path);
-    bool createTablesIfNotExist();
+    void connectWithDatabase(QString path);
 
     //Service&Repository
     void setMealsByCurrentDate(); //getting meals by date from repo and setting on currentMeals

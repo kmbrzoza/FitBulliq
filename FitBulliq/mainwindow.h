@@ -6,9 +6,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "repository.h"
 #include "meal.h"
 #include "product.h"
+#include "service.h"
 
 #include <QMainWindow>
 #include <QtSql>
@@ -29,6 +29,6 @@ private:
     Ui::MainWindow *ui;
 
     //BK
-    Repository repo; //repo is responsible for any action with database
+    Service service; //service is responsible for any action with database and objects
 };
 #endif // MAINWINDOW_H

@@ -6,7 +6,7 @@
 // BK IS RESPONSIBLE FOR THIS CODE
 
 #include "repository.h"
-
+#include <QMessageBox>
 
 Repository::Repository()
 {
@@ -30,8 +30,9 @@ bool Repository::setPathOfDatabase(QString path)
     }
     else
     {
-        return false;
+        throw std::runtime_error("Error - check path for database");
     }
+
 }
 
 
@@ -41,15 +42,15 @@ bool Repository::createTablesIfNotExist()
 
     //TABLE MEALS
     if(!query.exec("CREATE TABLE IF NOT EXISTS meals(id integer unique primary key autoincrement, name text, date date)"))
-        return false;
+        throw std::runtime_error("Error - cannot create table meals in database");
     //TABLE PRODUCTS
     if(!query.exec("CREATE TABLE IF NOT EXISTS products(id integer unique primary key autoincrement, name text, "
                   "kcal int, protein numeric(6,2), fats numeric(6,2), carbohydrates numeric(6,2) )"))
-        return false;
+        throw std::runtime_error("Error - cannot create table products in database");
     //TABLE MEALSPRODUCTS
     if(!query.exec("CREATE TABLE IF NOT EXISTS mealsProducts(id integer unique primary key autoincrement, "
                    "idMeal integer REFERENCES meals(id), idProduct integer REFERENCES products(id), grams int)"))
-        return false;
+        throw std::runtime_error("Error - cannot create table mealsProducts in database");
 
     return true;
 }
@@ -74,8 +75,7 @@ QList<Meal> Repository::getMealsByDate(QDate date)
     }
     else
     {
-        qDebug()<<"ERROR IN Repository::getMealsByDate()";
-        //throw
+        throw std::runtime_error("Error - Repository::getMealsByDate()");
     }
     return mealListByDate;
 }
@@ -112,16 +112,14 @@ QList<Product> Repository::getProductsToMeal(Meal meal)
             }
             else
             {
-                qDebug() << "ERROR - select with specs from product";
-                //THROWA ZROBIC//return false;
+                throw std::runtime_error("Error - Repository::getProductsToMeal - queryForProduct");
             }
         }
 
     }
     else
     {
-        qDebug() << "ERROR - select with inner join from mealProducts";
-        //THROWA ZROBIC//return false;
+        throw std::runtime_error("Error - Repository::getProductsToMeal - queryForIdProduct");
     }
 
     return meal.listProduct;
@@ -137,8 +135,8 @@ unsigned int Repository::addMeal(Meal meal)
         return query.lastInsertId().toInt();
     }
     else
-        return false;
-    //throw
+        throw std::runtime_error("Error - Repository::addMeal()");
+
 }
 
 
@@ -146,33 +144,18 @@ bool Repository::removeMeal(Meal meal)
 {
     QSqlQuery query;
 
-    while(meal.listProduct.size()>0)
-    {
-        //removing from meal last product from .listProduct while size > 0 (want remove all)
-        //when removing all the time the last one, at the end size = 0
-        if(removeMealProduct(meal, meal.listProduct[meal.listProduct.size()-1]))
-        {
-            //removed
-        }
-        else
-        {
-            qDebug()<<"ERROR with deleting last product from meal: Repository::removeMeal()->removeMealProduct()";
-            return false;
-        }
-    }
+    query.prepare("DELETE from mealsProducts where idMeal=:idMea");
+    query.bindValue(":idMea", meal.getId());
+    if(!query.exec())
+        throw std::runtime_error("ERROR with deleting from mealsProducts: removeMeal()");
 
     query.prepare("DELETE from meals where id=:idMeal");
     query.bindValue(":idMeal", meal.getId());
 
-    if(query.exec())
-    {
-        return true;
-    }
-    else
-    {
-        qDebug()<<"ERROR with deleting meal: removeMeal()";
-        return false;
-    }
+    if(!query.exec())
+        throw std::runtime_error("ERROR with deleting from meals: removeMeal()");
+
+    return true;
 }
 ////////////////////////////////////////////////////////////////
 
@@ -190,7 +173,7 @@ bool Repository::addProduct(Product product)
                   "'"+product.getProtein()+"', '"+product.getFats()+"', '"+product.getCarbohydrates()+"')"))
         return true;
     else
-        return false;
+        throw std::runtime_error("ERROR with adding product - Repository::addProduct()");
 }
 
 
@@ -209,7 +192,7 @@ QList<Product> Repository::getProductsByText(QString text)
         }
     }
     else
-        qDebug()<<"Error in getting products by text";
+        throw std::runtime_error("Error - Repository::getProductsByText()");
 
     return listProducts;
 }
@@ -225,8 +208,7 @@ bool Repository::removeProduct(Product product)
 
     if(!query.exec())
     {
-        qDebug()<<"ERROR with deleting in mealsProducts product: removeProduct()";
-        return false;
+        throw std::runtime_error("ERROR with deleting in mealsProducts product: Repository::removeProduct()");
     }
 
     query.prepare("DELETE from products where id=:idProduct");
@@ -234,8 +216,7 @@ bool Repository::removeProduct(Product product)
 
     if(!query.exec())
     {
-        qDebug()<<"ERROR with deleting in products product: removeProduct()";
-        return false;
+        throw std::runtime_error("ERROR with deleting in products product: Repository::removeProduct()");
     }
 
     return true;
@@ -257,7 +238,7 @@ bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
         return true;
     }
     else
-        return false;
+        throw std::runtime_error("ERROR with adding mealProduct to mealProducts: Repository::addMealProduct()");
 }
 
 
@@ -274,8 +255,7 @@ bool Repository::removeMealProduct(Meal meal, Product productToRemove)
     }
     else
     {
-        qDebug()<<"ERROR with deleting product from meal (bool removeMealProduct())";
-        return false;
+        throw std::runtime_error("ERROR with deleting product from mealProduct (bool Repository::removeMealProduct())");
     }
 }
 
@@ -294,8 +274,7 @@ bool Repository::editMealProduct(Meal meal, Product productToEdit, unsigned int 
     }
     else
     {
-        qDebug()<<"ERROR with updating MealProduct - bool edutMealProduct()";
-        return false;
+        throw std::runtime_error("ERROR with updating MealProduct - bool Repository::editMealProduct()");
     }
 
 }

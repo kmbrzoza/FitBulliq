@@ -27,20 +27,18 @@ QDate Service::getCurrentDate()
 
 
 //DATABASE
-bool Service::setPathOfDatabase(QString path)
+void Service::connectWithDatabase(QString path)
 {
-    if(repo.setPathOfDatabase(path))
-        return true;
-    else
-        return false;
-}
+    try
+    {
+        repo.setPathOfDatabase(path);
+        repo.createTablesIfNotExist();
+    }
+    catch (std::exception &e)
+    {
+        qDebug()<< e.what();
+    }
 
-bool Service::createTablesIfNotExist()
-{
-    if(repo.createTablesIfNotExist())
-        return true;
-    else
-        return false;
 }
 ///////////////////////////////
 
@@ -49,29 +47,53 @@ bool Service::createTablesIfNotExist()
 //SERVICE&REPOSITORY
 void Service::setMealsByCurrentDate()
 {
-   currentMeals = repo.getMealsByDate(getCurrentDate());
+    try
+    {
+        currentMeals = repo.getMealsByDate(getCurrentDate());
+    }
+    catch(std::exception &e)
+    {
+        qDebug()<<e.what();
+    }
 }
 
 void Service::setProductsToMeals()
 {
-    foreach(Meal meal, currentMeals)
+    try
     {
-        meal.listProduct = repo.getProductsToMeal(meal);
+        foreach(Meal meal, currentMeals)
+        {
+            meal.listProduct = repo.getProductsToMeal(meal);
+        }
+    }
+    catch (std::exception &e)
+    {
+        qDebug()<<e.what();
     }
 }
 
 void Service::addMeal(Meal meal)
 {
-    meal.setId(repo.addMeal(meal));
-    currentMeals.append(meal);
+    try
+    {
+        meal.setId(repo.addMeal(meal));
+        currentMeals.append(meal);
+    }
+    catch(std::exception &e)
+    {
+        qDebug()<<e.what();
+    }
 }
 
 void Service::removeMeal(unsigned int indexOfRow)
 {
-    if(repo.removeMeal(currentMeals[indexOfRow]))
+    try
     {
-        currentMeals.removeAt(indexOfRow);
-        //removed
+        repo.removeMeal(currentMeals[indexOfRow]);
+    }
+    catch(std::exception &e)
+    {
+        qDebug()<<e.what();
     }
 }
 ///////////////////////////
@@ -86,24 +108,38 @@ Meal Service::getMealClicked(unsigned int indexOfRow)
 
 void Service::addProduct(Product product)
 {
-    if(repo.addProduct(product))
+    try
     {
-        //added
+        repo.addProduct(product);
     }
-    else
+    catch(std::exception &e)
     {
-        //not added
+        qDebug()<<e.what();
     }
 }
 
 void Service::setListProductsByText(QString text)
 {
-    listProducts = repo.getProductsByText(text);
+    try
+    {
+        listProducts = repo.getProductsByText(text);
+    }
+    catch(std::exception &e)
+    {
+        qDebug()<<e.what();
+    }
 }
 
 void Service::removeProduct(Product product)
 {
-    repo.removeProduct(product);
+    try
+    {
+        repo.removeProduct(product);
+    }
+    catch(std::exception &e)
+    {
+        qDebug()<<e.what();
+    }
 }
 ///////////////////////////////
 
@@ -117,46 +153,48 @@ Product Service::getProductClicked(unsigned int indexOfRow)
 
 void Service::addMealProduct(unsigned int indexOfSelectedMeal, Product product, unsigned int grams)
 {
-    if(repo.addMealProduct(currentMeals[indexOfSelectedMeal], product, grams))
+    try
     {
+        repo.addMealProduct(currentMeals[indexOfSelectedMeal], product, grams);
         product.setGrams(grams);
         currentMeals[indexOfSelectedMeal].listProduct.append(product);
     }
-    else
+    catch(std::exception &e)
     {
-        //not added
+        qDebug()<<e.what();
     }
 }
 
 void Service::removeMealProduct(unsigned int indexOfSelectedMeal, unsigned int indexOfSelectedProduct)
 {
-    if(repo.removeMealProduct(currentMeals[indexOfSelectedMeal], currentMeals[indexOfSelectedMeal].listProduct[indexOfSelectedProduct]))
+    try
     {
+        repo.removeMealProduct(currentMeals[indexOfSelectedMeal], currentMeals[indexOfSelectedMeal].listProduct[indexOfSelectedProduct]);
         currentMeals[indexOfSelectedMeal].listProduct.removeAt(indexOfSelectedProduct);
     }
-    else
+    catch(std::exception &e)
     {
-        //not removed
+        qDebug()<<e.what();
     }
 }
 
 void Service::editMealProduct(unsigned int indexOfSelectedMeal, unsigned int indexOfSelectedProduct, unsigned int grams)
 {
-    if(repo.editMealProduct(currentMeals[indexOfSelectedMeal], currentMeals[indexOfSelectedMeal].listProduct[indexOfSelectedProduct], grams))
+    try
     {
+        repo.editMealProduct(currentMeals[indexOfSelectedMeal], currentMeals[indexOfSelectedMeal].listProduct[indexOfSelectedProduct], grams);
         currentMeals[indexOfSelectedMeal].listProduct[indexOfSelectedProduct].setGrams(grams);
     }
-    else
+    catch(std::exception &e)
     {
-        //not edited
+        qDebug()<<e.what();
     }
 }
 /////////////////////////////////
 
 
 
-
-
+//SERVICE
 unsigned int Service::getKcalDay()
 {
     unsigned int sum=0;
