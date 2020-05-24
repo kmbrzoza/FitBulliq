@@ -5,11 +5,12 @@
 #include "meal.h"
 #include "repository.h"
 
+#include <QMessageBox>
 
 class Service
 {
 private:
-    QDate currentDate;
+
 
     Repository repo;
 
@@ -21,15 +22,11 @@ public:
     Service();
     virtual ~Service();
 
-    //Date
-    void setCurrentDate(QDate date);
-    QDate getCurrentDate();
-
     //Database
     void connectWithDatabase(QString path);
 
     //Service&Repository
-    void setMealsByCurrentDate(); //getting meals by date from repo and setting on currentMeals
+    void setMealsByDate(QDate date); //getting meals by date from repo and setting on currentMeals
     void setProductsToMeals(); //setting products to currentMeals
     void addMeal(Meal meal); //adding meal to currentMeals
     void removeMeal(unsigned int indexOfRow); //remove meal from currentMeals and database; indexOfRow is number of selected row in ComboBox

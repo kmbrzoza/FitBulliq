@@ -35,8 +35,8 @@ public:
 
     bool addProduct(Product product); //adding new product to database (table products), DOUBLES (xxxx.xx) where x is digit
     QList<Product> getProductsByText(QString text); //returns list of products where name is *text*
-    ////DODAĆ TUTAJ USUWANIE DANEGO PRODUKTU Z INNYCH POSIŁKOW NAJPIERW!!!!
     bool removeProduct(Product product);//removing from DataBase
+    bool editProduct(Product product, Product productEdited);
 
     bool addMealProduct(Meal meal, Product product, unsigned int grams); //adding Meal-Product to database (table mealsProducts);
     bool removeMealProduct(Meal meal, Product productToRemove); //removing product from meal

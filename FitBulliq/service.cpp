@@ -12,19 +12,6 @@ Service::~Service()
 
 
 
-//DATE
-void Service::setCurrentDate(QDate date)
-{
-    currentDate=date;
-}
-
-QDate Service::getCurrentDate()
-{
-    return currentDate;
-}
-///////////////////
-
-
 
 //DATABASE
 void Service::connectWithDatabase(QString path)
@@ -36,24 +23,29 @@ void Service::connectWithDatabase(QString path)
     }
     catch (std::exception &e)
     {
-        qDebug()<< e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - connecting database");
+        message.setText(e.what());
+        message.exec();
     }
-
 }
 ///////////////////////////////
 
 
 
 //SERVICE&REPOSITORY
-void Service::setMealsByCurrentDate()
+void Service::setMealsByDate(QDate date)
 {
     try
     {
-        currentMeals = repo.getMealsByDate(getCurrentDate());
+        currentMeals = repo.getMealsByDate(date);
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - setting Meals");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -68,7 +60,10 @@ void Service::setProductsToMeals()
     }
     catch (std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - setting Products to Meal");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -81,7 +76,10 @@ void Service::addMeal(Meal meal)
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - adding Meal");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -93,7 +91,10 @@ void Service::removeMeal(unsigned int indexOfRow)
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - removing Meal");
+        message.setText(e.what());
+        message.exec();
     }
 }
 ///////////////////////////
@@ -114,7 +115,10 @@ void Service::addProduct(Product product)
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - adding Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -126,7 +130,10 @@ void Service::setListProductsByText(QString text)
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - setting List Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -138,7 +145,10 @@ void Service::removeProduct(Product product)
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - removing Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 ///////////////////////////////
@@ -161,7 +171,10 @@ void Service::addMealProduct(unsigned int indexOfSelectedMeal, Product product, 
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - adding Meal Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -174,7 +187,10 @@ void Service::removeMealProduct(unsigned int indexOfSelectedMeal, unsigned int i
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - removing Meal Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 
@@ -187,7 +203,10 @@ void Service::editMealProduct(unsigned int indexOfSelectedMeal, unsigned int ind
     }
     catch(std::exception &e)
     {
-        qDebug()<<e.what();
+        QMessageBox message;
+        message.setWindowTitle("Error - editing Meal Product");
+        message.setText(e.what());
+        message.exec();
     }
 }
 /////////////////////////////////
