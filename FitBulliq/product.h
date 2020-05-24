@@ -52,6 +52,8 @@ public:
     double getProteinByGrams();
     double getFatsByGrams();
     double getCarbohydratesByGrams();
+
+    bool operator==(const Product& product); //OPERATOR ==
 };
 
 #endif // PRODUCT_H

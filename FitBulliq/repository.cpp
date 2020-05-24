@@ -59,111 +59,113 @@ bool Repository::createTablesIfNotExist()
 
 
 
-
-bool Repository::addMeal(QList<Meal>& listMeal, Meal meal)
-{
-    QSqlQuery query;
-    if(query.exec("insert into meals (name, date) values('"+meal.getName()+"','"+meal.getDate().toString("yyyy-MM-dd")+"')"))
-    {
-        query.next();
-        meal.setId(query.lastInsertId().toInt());
-        listMeal.append(meal);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-
 QList<Meal> Repository::getMealsByDate(QDate date)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM meals where date='"+date.toString("yyyy-MM-dd")+"'");
     QList<Meal> mealListByDate;
-    while(query.next())
+    if(query.exec())
     {
-        //Adding new meal to list, I'm giving date from argument, because its the same date
-        mealListByDate.append(Meal(query.value(0).toInt(), query.value(1).toString(), date));
+        while(query.next())
+        {
+            //Adding new meal to list, I'm giving date from argument, because its the same date
+            mealListByDate.append(Meal(query.value(0).toInt(), query.value(1).toString(), date));
+        }
+    }
+    else
+    {
+        qDebug()<<"ERROR IN Repository::getMealsByDate()";
+        //throw
     }
     return mealListByDate;
 }
 
 
-bool Repository::setProductsToMealsByDate(QList<Meal>& mealListByDate)
+QList<Product> Repository::getProductsToMeal(Meal meal)
 {
     QSqlQuery queryForIdProduct;
     QSqlQuery queryForProduct;
-    for(int i=0; i<mealListByDate.size(); i++)//Loop setting products to all meals
-    {
-        //Preparing select to get idProduct witch is in relation with idMeal
-        queryForIdProduct.prepare("SELECT mp.idProduct, mp.grams from mealsProducts mp INNER JOIN products p ON mp.idProduct=p.id "
+
+    //Preparing select to get idProduct witch is in relation with idMeal
+    queryForIdProduct.prepare("SELECT mp.idProduct, mp.grams from mealsProducts mp INNER JOIN products p ON mp.idProduct=p.id "
                       "INNER JOIN meals m on mp.idMeal=m.id where m.id=:mId");
-        queryForIdProduct.bindValue(":mId", mealListByDate[i].getId());
+    queryForIdProduct.bindValue(":mId", meal.getId());
 
-        if(queryForIdProduct.exec())
+    if(queryForIdProduct.exec())
+    {
+        while(queryForIdProduct.next())
         {
-            while(queryForIdProduct.next())
+            //Now preparing select to get product specs
+            queryForProduct.prepare("select name, kcal, protein, fats, carbohydrates from products where id=:pId");
+            queryForProduct.bindValue(":pId", queryForIdProduct.value(0));
+
+            if(queryForProduct.exec())
             {
-                //Now preparing select to get product specs
-                queryForProduct.prepare("select name, kcal, protein, fats, carbohydrates from products where id=:pId");
-                queryForProduct.bindValue(":pId", queryForIdProduct.value(0));
-
-                if(queryForProduct.exec())
-                {
-                    queryForProduct.next();
-                    mealListByDate[i].listProduct.append(Product(queryForIdProduct.value(0).toInt(), //id
-                                                                         queryForProduct.value(0).toString(), //name
-                                                                         queryForProduct.value(1).toInt(), //kcal
-                                                                         queryForProduct.value(2).toDouble(), //protein
-                                                                         queryForProduct.value(3).toDouble(), //fats
-                                                                         queryForProduct.value(4).toDouble(), //carbohydrates
-                                                                         queryForIdProduct.value(1).toInt())); //grams
-                }
-                else
-                {
-                    qDebug() << "ERROR - select with specs from product";
-                    return false;
-                }
+                queryForProduct.next();
+                meal.listProduct.append(Product(queryForIdProduct.value(0).toInt(), //id
+                                                                     queryForProduct.value(0).toString(), //name
+                                                                     queryForProduct.value(1).toInt(), //kcal
+                                                                     queryForProduct.value(2).toDouble(), //protein
+                                                                     queryForProduct.value(3).toDouble(), //fats
+                                                                     queryForProduct.value(4).toDouble(), //carbohydrates
+                                                                     queryForIdProduct.value(1).toInt())); //grams
             }
+            else
+            {
+                qDebug() << "ERROR - select with specs from product";
+                //THROWA ZROBIC//return false;
+            }
+        }
 
-        }
-        else
-        {
-            qDebug() << "ERROR - select with inner join from mealProducts";
-            return false;
-        }
+    }
+    else
+    {
+        qDebug() << "ERROR - select with inner join from mealProducts";
+        //THROWA ZROBIC//return false;
     }
 
-    return true;
+    return meal.listProduct;
 }
 
-bool Repository::removeMeal(QList<Meal>& listMeal, unsigned int indexOfComboBox)
+
+unsigned int Repository::addMeal(Meal meal)
+{
+    QSqlQuery query;
+    if(query.exec("insert into meals (name, date) values('"+meal.getName()+"','"+meal.getDate().toString("yyyy-MM-dd")+"')"))
+    {
+        query.next();
+        return query.lastInsertId().toInt();
+    }
+    else
+        return false;
+    //throw
+}
+
+
+bool Repository::removeMeal(Meal meal)
 {
     QSqlQuery query;
 
-    while(listMeal[indexOfComboBox].listProduct.size()>0)
+    while(meal.listProduct.size()>0)
     {
-        //removing from listMeal last product from .listProduct while size > 0 (want remove all)
-        //if removing all the time the last one, on the finish size = 0
-        if(removeMealProduct(listMeal[indexOfComboBox], listMeal[indexOfComboBox].listProduct[listMeal[indexOfComboBox].listProduct.size()-1]))
+        //removing from meal last product from .listProduct while size > 0 (want remove all)
+        //when removing all the time the last one, at the end size = 0
+        if(removeMealProduct(meal, meal.listProduct[meal.listProduct.size()-1]))
         {
             //removed
         }
         else
         {
-            qDebug()<<"ERROR with deleting last product from meal: removeMeal()->removeMealProduct()";
+            qDebug()<<"ERROR with deleting last product from meal: Repository::removeMeal()->removeMealProduct()";
             return false;
         }
     }
 
     query.prepare("DELETE from meals where id=:idMeal");
-    query.bindValue(":idMeal", listMeal[indexOfComboBox].getId());
+    query.bindValue(":idMeal", meal.getId());
 
     if(query.exec())
     {
-        listMeal.removeAt(indexOfComboBox); //removing selected meal
         return true;
     }
     else
@@ -213,16 +215,9 @@ QList<Product> Repository::getProductsByText(QString text)
 }
 
 
-Product Repository::getProductByTextIndex(QList<Product> listProduct, unsigned int indexOfRow)
-{
-    return listProduct[indexOfRow];
-}
-
-
 bool Repository::removeProduct(Product product)
 {
-    //listProduct should be list returned by getProductsByText()!!!!!
-
+    //DODAĆ TUTAJ USUWANIE DANEGO PRODUKTU Z INNYCH POSIŁKOW NAJPIERW!!!!
     QSqlQuery query;
     query.prepare("DELETE from products where id=:idProduct");
     query.bindValue(":idProduct", product.getId());
@@ -243,7 +238,7 @@ bool Repository::removeProduct(Product product)
 
 
 
-bool Repository::addMealProduct(Meal& meal, Product product, unsigned int grams)
+bool Repository::addMealProduct(Meal meal, Product product, unsigned int grams)
 {
     QSqlQuery query;
     query.prepare("insert into mealsProducts (idMeal, idProduct, grams) values (:idMeal, :idProduct, :grams)");
@@ -252,8 +247,6 @@ bool Repository::addMealProduct(Meal& meal, Product product, unsigned int grams)
     query.bindValue(":grams", grams);
     if(query.exec())
     {
-        product.setGrams(grams);
-        meal.listProduct.append(product);
         return true;
     }
     else
@@ -261,13 +254,7 @@ bool Repository::addMealProduct(Meal& meal, Product product, unsigned int grams)
 }
 
 
-Product Repository::getWhichProductRemove(Meal meal, int indexOfRow)
-{
-    Product product = meal.listProduct[indexOfRow];
-    return product;
-}
-
-
+/* EDITED below
 bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
 {
     bool statusDeleted=false;
@@ -302,6 +289,45 @@ bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
         index++;
     }
     return statusDeleted;
+} EDITED below */
+// USED OPERATOR==
+bool Repository::removeMealProduct(Meal meal, Product productToRemove)
+{
+    QSqlQuery query;
+    query.prepare("DELETE from mealsProducts where idMeal=:idMeal and idProduct=:idProduct and grams=:grams");
+    query.bindValue(":idMeal", meal.getId());
+    query.bindValue(":idProduct", productToRemove.getId());
+    query.bindValue(":grams", productToRemove.getGrams());
+    if(query.exec())
+    {
+        return true;
+    }
+    else
+    {
+        qDebug()<<"ERROR with deleting product from meal (bool removeMealProduct())";
+        return false;
+    }
+}
+
+
+bool Repository::editMealProduct(Meal meal, Product productToEdit, unsigned int grams)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE mealsProducts set grams=:gramsToEdit where idMeal=:idMeal and idProduct=:idProduct and grams=:grams");
+    query.bindValue(":gramsToEdit", grams);
+    query.bindValue(":idMeal", meal.getId());
+    query.bindValue(":idProduct", productToEdit.getId());
+    query.bindValue(":grams", productToEdit.getGrams());
+    if(query.exec())
+    {
+        return true;
+    }
+    else
+    {
+        qDebug()<<"ERROR with updating MealProduct - bool edutMealProduct()";
+        return false;
+    }
+
 }
 //////////////////////////////////
 
@@ -309,44 +335,6 @@ bool Repository::removeMealProduct(Meal& meal, Product productToRemove)
 
 
 
-unsigned int Repository::getKcalDay(QList<Meal> listMeal)
-{
-    unsigned int sum=0;
-    foreach(Meal meal, listMeal)
-    {
-        sum = sum + meal.getKcalMeal();
-    }
-    return sum;
-}
 
-double Repository::getProteinDay(QList<Meal> listMeal)
-{
-    double sum=0;
-    foreach(Meal meal, listMeal)
-    {
-        sum = sum + meal.getProteinMeal();
-    }
-    return sum;
-}
-
-double Repository::getFatsDay(QList<Meal> listMeal)
-{
-    double sum=0;
-    foreach(Meal meal, listMeal)
-    {
-        sum = sum + meal.getFatsMeal();
-    }
-    return sum;
-}
-
-double Repository::getCarbohydratesDay(QList<Meal> listMeal)
-{
-    double sum=0;
-    foreach(Meal meal, listMeal)
-    {
-        sum = sum + meal.getCarbohydratesMeal();
-    }
-    return sum;
-}
 
 

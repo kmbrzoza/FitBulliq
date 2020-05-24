@@ -111,3 +111,12 @@ double Product::getCarbohydratesByGrams()
 {
     return (getCarbohydrates()*(getGrams()*0.01));
 }
+
+
+bool Product::operator==(const Product &product)
+{
+    if(id==product.id && grams == product.grams)
+        return true;
+    else
+        return false;
+}

@@ -20,13 +20,15 @@ SOURCES += \
     mainwindow.cpp \
     meal.cpp \
     product.cpp \
-    repository.cpp
+    repository.cpp \
+    service.cpp
 
 HEADERS += \
     mainwindow.h \
     meal.h \
     product.h \
-    repository.h
+    repository.h \
+    service.h
 
 FORMS += \
     mainwindow.ui
