@@ -142,11 +142,34 @@ void Service::removeProduct(Product product)
     try
     {
         repo.removeProduct(product);
+
+        //when done, have to update currentMeals list
+        removeProductsFromCurrentMeals();
+        setProductsToMeals();
     }
     catch(std::exception &e)
     {
         QMessageBox message;
         message.setWindowTitle("Error - removing Product");
+        message.setText(e.what());
+        message.exec();
+    }
+}
+
+void Service::editProduct(Product product, Product productEdited)
+{
+    try
+    {
+        repo.editProduct(product, productEdited);
+
+        //when done, have to update currentMeals list
+        removeProductsFromCurrentMeals();
+        setProductsToMeals();
+    }
+    catch (std::exception &e)
+    {
+        QMessageBox message;
+        message.setWindowTitle("Error - editing Product");
         message.setText(e.what());
         message.exec();
     }
@@ -212,6 +235,17 @@ void Service::editMealProduct(unsigned int indexOfSelectedMeal, unsigned int ind
 /////////////////////////////////
 
 
+void Service::removeProductsFromCurrentMeals()
+{
+    foreach(Meal meal, currentMeals)
+    {
+        while(!meal.listProduct.isEmpty())
+        {
+            meal.listProduct.removeLast();
+        }
+    }
+}
+////////////////////////////////
 
 //SERVICE
 unsigned int Service::getKcalDay()

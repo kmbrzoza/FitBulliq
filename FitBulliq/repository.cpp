@@ -221,6 +221,28 @@ bool Repository::removeProduct(Product product)
 
     return true;
 }
+
+
+bool Repository::editProduct(Product product, Product productEdited)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE products set name=:productEName, kcal=:productEKcal, protein=:productEProtein, fats=:productEFats, "
+                  "carbohydrates=:productECarbohydrates where id=:idProduct");
+    query.bindValue(":productEName", productEdited.getName());
+    query.bindValue(":productEKcal", productEdited.getKcal());
+    query.bindValue(":productEProtein", productEdited.getProtein());
+    query.bindValue(":productEFats", productEdited.getFats());
+    query.bindValue(":productECarbohydrates", productEdited.getCarbohydrates());
+    query.bindValue(":idProduct", product.getId());
+
+    if(query.exec())
+    {
+        return true;
+    }
+    else
+        throw std::runtime_error("ERROR with updating product - Repository::editProduct()");
+
+}
 ///////////////////////////////////////////////////////////////////
 
 

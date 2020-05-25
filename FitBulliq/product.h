@@ -24,6 +24,7 @@ private:
     
 public:
     Product();
+    Product(QString name, unsigned int kcal, double protein, double fats, double carbohydrates); //need it when for example editing product (then don't need id)
     Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates);
     Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates, unsigned int grams);
     virtual ~Product();

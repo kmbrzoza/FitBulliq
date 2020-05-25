@@ -37,6 +37,7 @@ public:
     void addProduct(Product product); //add product to database
     //PO REMOVE POWINNA SIE ZAKTUALIZOWAC LISTA POSILKOW BO USUNELISMY PRODUKT KTORY MOGL BYC W JAKIMS POSILKU
     void removeProduct(Product product); //removing product from database
+    void editProduct(Product product, Product productEdited); //edit product in database; product is which product want edit, productEdited is product after edit
 
     Product getProductClicked(unsigned int indexOfRow); //returns which product is clicked by indexOfRow from listProducts
 
@@ -46,6 +47,7 @@ public:
     void removeMealProduct(unsigned int indexOfSelectedMeal, unsigned int indexOfSelectedProduct);
     void editMealProduct(unsigned int indexOfSelectedMeal, unsigned int indexOfSelectedProduct, unsigned int grams);//editting in meal[index] the product[index] and setting grams
 
+    void removeProductsFromCurrentMeals(); //removing all listProducts from currentMeals; it clear lists and is easy to update that by setProductsToMeals() when for example edited/removed product
 
     ////////////
     unsigned int getKcalDay();

@@ -15,6 +15,15 @@ Product::~Product()
 {
 }
 
+Product::Product(QString name, unsigned int kcal, double protein, double fats, double carbohydrates)
+{
+    this->name=name;
+    this->kcal=kcal;
+    this->protein=protein;
+    this->fats=fats;
+    this->carbohydrates=carbohydrates;
+}
+
 Product::Product(unsigned int id, QString name, unsigned int kcal, double protein, double fats, double carbohydrates)
 {
     this->id=id;
