@@ -13,15 +13,19 @@ class AddMealWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddMealWindow(QWidget *parent = nullptr);
+    //explicit AddMealWindow(QWidget *parent = nullptr);
+    explicit AddMealWindow(Service& service, QDate date, QWidget *parent = nullptr);
     ~AddMealWindow();
 
 private slots:
     void on_ConfirmButton_clicked();
 
+
 private:
     Ui::AddMealWindow *ui;
-    Service service;
+    Service& service;
+    QDate date;
+
 };
 
 #endif // ADDMEALWINDOW_H

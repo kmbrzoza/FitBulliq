@@ -1,3 +1,10 @@
+// FITBULLIQ - PROJECT PROGRAMOWANIE II
+// AUTHORS: BRZOZA KRZYSZTOF, GENDASZ KAMILA
+// shortcuts corresponding to the part of the code to the name
+// BK - BRZOZA KRZYSZTOF ; GK - GENDASZ KAMILA
+
+// BK IS RESPONSIBLE FOR THIS CODE
+
 #ifndef SERVICE_H
 #define SERVICE_H
 

@@ -47,7 +47,7 @@ private:
     void setCombobox(QDate date);//setting meals by day in combobox
     void setListWid();//setting product to selected meal in listwidget
     AddProductWindow *addProductWindow; //related to opening new window (Dodaj produkt)
-    AddMealWindow *addMealWindow; //related to opening new window (Dodaj Posilek)
+    //AddMealWindow addMealWindow; //related to opening new window (Dodaj Posilek)
     EditMealProductWindow *editMealProductWindow;//related to opening new window (Edytuj Produkt)
     Meal meal;
     //BK

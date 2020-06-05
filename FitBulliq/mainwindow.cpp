@@ -33,6 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setCombobox(QDate date)
 {
+    ui->comboBox->clear(); // BK added
     service.setMealsByDate(date);
     for(int i=0; i<service.currentMeals.size();i++)
     {
@@ -57,10 +58,13 @@ void MainWindow::on_AddProductButton_clicked()
     addProductWindow->show();
 }
 
+//EDITED BK
 void MainWindow::on_AddMealButton_clicked()
 {
-    addMealWindow = new AddMealWindow(this);
-    addMealWindow->show();
+    AddMealWindow addMealWindow(service, ui->dateEdit->date(), this);
+    addMealWindow.setModal(true);
+    addMealWindow.exec();
+    setCombobox(ui->dateEdit->date());
 }
 
 void MainWindow::on_RemovMealpushButton_clicked()

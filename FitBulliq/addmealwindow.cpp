@@ -1,35 +1,47 @@
 #include "addmealwindow.h"
 #include "ui_addmealwindow.h"
 //#include "ui_mainwindow.h"
-#include "mainwindow.h"
 
-AddMealWindow::AddMealWindow(QWidget *parent) :QDialog(parent),ui(new Ui::AddMealWindow)
+//AddMealWindow::AddMealWindow(QWidget *parent) :QDialog(parent),ui(new Ui::AddMealWindow)
+//{
+//    ui->setupUi(this);
+
+//}
+
+//created BK
+AddMealWindow::AddMealWindow(Service& service, QDate date, QWidget *parent): QDialog(parent), ui(new Ui::AddMealWindow), service(service)
 {
     ui->setupUi(this);
-
+    this->date=date;
 }
-/*AddMealWindow::AddMealWindow(QDate &date, QWidget *parent) :QDialog(parent),ui(new Ui::AddMealWindow), date(date)
-{
-    ui->setupUi(this);
-}*/
 
 AddMealWindow::~AddMealWindow()
 {
     delete ui;
 }
 
+//EDITED BK
 void AddMealWindow::on_ConfirmButton_clicked()
 {
-    QString name = ui->AddMealLineEdit->text();
-    MainWindow* parent = qobject_cast<MainWindow*>(this->parent());
-    QDate date = parent->ui->dateEdit->date();
-    Meal meal(name, date);
-    service.addMeal(meal);
-    service.setMealsByDate(date);
-    parent->ui->comboBox->clear();
-    for(int i=0; i<service.currentMeals.size();i++)
+    try
     {
-     parent->ui->comboBox->addItem(service.currentMeals[i].getName());
+        QString name = ui->AddMealLineEdit->text();
+        if(name.isEmpty())
+        {
+            throw std::runtime_error("Error - Musisz podac nazwe");
+        }
+        //MainWindow* parent = qobject_cast<MainWindow*>(this->parent());
+        Meal meal(name, date);
+        service.addMeal(meal);
+        this->close();
     }
-     this->close();
+    catch(std::exception &e)
+    {
+        QMessageBox message;
+        message.setWindowTitle("Error - adding meal");
+        message.setText(e.what());
+        message.exec();
+    }
+
+
 }
