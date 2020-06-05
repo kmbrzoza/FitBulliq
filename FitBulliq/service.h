@@ -14,11 +14,13 @@ private:
 
     Repository repo;
 
-    QList<Meal> currentMeals;
 
-    QList<Product> listProducts; //this list is updated by setListProductsByText()
+
 
 public:
+    QList<Product> listProducts; //this list is updated by setListProductsByText() //KG moved from private
+
+    QList<Meal> currentMeals;//KG moved from private
     Service();
     virtual ~Service();
 

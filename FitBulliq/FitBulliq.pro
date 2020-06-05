@@ -16,6 +16,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addmealwindow.cpp \
+    addownproductwindow.cpp \
+    addproductwindow.cpp \
+    editmealproductwindow.cpp \
+    editproductwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     meal.cpp \
@@ -24,6 +29,11 @@ SOURCES += \
     service.cpp
 
 HEADERS += \
+    addmealwindow.h \
+    addownproductwindow.h \
+    addproductwindow.h \
+    editmealproductwindow.h \
+    editproductwindow.h \
     mainwindow.h \
     meal.h \
     product.h \
@@ -31,6 +41,11 @@ HEADERS += \
     service.h
 
 FORMS += \
+    addmealwindow.ui \
+    addownproductwindow.ui \
+    addproductwindow.ui \
+    editmealproductwindow.ui \
+    editproductwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
