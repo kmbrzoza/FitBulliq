@@ -24,10 +24,15 @@ AddProductWindow::~AddProductWindow()
 
 void AddProductWindow::setPrdListWid()
 {
+    //EDITED BK
     ui->listWidget->clear();
     for(int i=0;i<service.listProducts.size();i++)
     {
-        ui->listWidget->addItem(service.listProducts[i].getName()+" "+service.listProducts[i].getProtein()+" "+service.listProducts[i].getFats()+" "+service.listProducts[i].getCarbohydrates());
+        ui->listWidget->addItem(service.listProducts[i].getName()+" | "
+                                +QString::number(service.listProducts[i].getKcal())+" | "
+                                +QString::number(service.listProducts[i].getProtein())+" | "
+                                +QString::number(service.listProducts[i].getFats())+" | "
+                                +QString::number(service.listProducts[i].getCarbohydrates()));
     }
 }
 

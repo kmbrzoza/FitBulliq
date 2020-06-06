@@ -111,9 +111,9 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox">
+       <widget class="QSpinBox" name="spinBoxKcal">
         <property name="maximum">
-         <double>9999.989999999999782</double>
+         <number>9999</number>
         </property>
        </widget>
       </item>

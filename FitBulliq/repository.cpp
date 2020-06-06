@@ -169,8 +169,8 @@ bool Repository::addProduct(Product product)
     //DOUBLES ARE (xxxx.xx) where x is digit
 
     QSqlQuery query;
-    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+product.getName()+"', '"+product.getKcal()+"', "
-                  "'"+product.getProtein()+"', '"+product.getFats()+"', '"+product.getCarbohydrates()+"')"))
+    if(query.exec("insert into products (name, kcal, protein, fats, carbohydrates) values ('"+product.getName()+"', '"+QString::number(product.getKcal())+"', "
+                  "'"+QString::number(product.getProtein())+"', '"+QString::number(product.getFats())+"', '"+QString::number(product.getCarbohydrates())+"')"))
         return true;
     else
         throw std::runtime_error("ERROR with adding product - Repository::addProduct()");
@@ -181,8 +181,7 @@ QList<Product> Repository::getProductsByText(QString text)
 {
     QList<Product> listProducts;
     QSqlQuery query;
-    query.prepare("SELECT * from products where name like '%:text%'");
-    query.bindValue(":text", text);
+    query.prepare("SELECT * from products where name like '%"+text+"%'");
     if(query.exec())
     {
         while(query.next())

@@ -60,10 +60,19 @@ void Service::setProductsToMeals()
 {
     try
     {
-        foreach(Meal meal, currentMeals)
+        for(int i=0; i<currentMeals.size(); i++)
         {
-            meal.listProduct = repo.getProductsToMeal(meal);
+            while(currentMeals[i].listProduct.size()>0)
+            {
+                currentMeals[i].listProduct.removeFirst();
+            }
         }
+
+        for(int i=0; i<currentMeals.size(); i++)
+        {
+            currentMeals[i].listProduct= repo.getProductsToMeal(currentMeals[i]);
+        }
+
     }
     catch (std::exception &e)
     {

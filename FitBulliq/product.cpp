@@ -103,22 +103,26 @@ unsigned int Product::getGrams()
 
 unsigned int Product::getKcalByGrams()
 {
-    return (getKcal()*(getGrams()*0.01));
+    QString temp = QString::number(getKcal()*(getGrams()*0.01), 'f', 0);
+    return (temp.toUInt());
 }
 
 double Product::getProteinByGrams()
 {
-    return (getProtein()*(getGrams()*0.01));
+    QString temp = QString::number(getProtein()*(getGrams()*0.01), 'f', 2);
+    return (temp.toDouble());
 }
 
 double Product::getFatsByGrams()
 {
-    return (getFats()*(getGrams()*0.01));
+    QString temp = QString::number(getFats()*(getGrams()*0.01), 'f', 2);
+    return (temp.toDouble());
 }
 
 double Product::getCarbohydratesByGrams()
 {
-    return (getCarbohydrates()*(getGrams()*0.01));
+    QString temp = QString::number(getCarbohydrates()*(getGrams()*0.01), 'f', 2);
+    return (temp.toDouble());
 }
 
 

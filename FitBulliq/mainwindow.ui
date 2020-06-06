@@ -10,6 +10,11 @@
     <height>376</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -54,10 +59,7 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QPushButton" name="AddProductButton">
@@ -81,6 +83,16 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Nazwa produktu | Ilosc | Kcal | Białko | Tłuszcze | Węglowodany</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QListWidget" name="listWidget"/>
     </item>
    </layout>
   </widget>

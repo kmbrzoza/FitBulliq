@@ -43,22 +43,41 @@ void MainWindow::setCombobox(QDate date)
 
 void MainWindow::setListWid()
 {
+    //EDITED BK
     ui->listWidget->clear();
     service.setProductsToMeals();
     int comboboxindex = ui->comboBox->currentIndex();
     if(comboboxindex>=0){
     for(int i=0;i<service.currentMeals[comboboxindex].listProduct.size();i++)
     {
-        ui->listWidget->addItem(service.currentMeals[comboboxindex].listProduct[i].getName());
+        ui->listWidget->addItem(service.currentMeals[comboboxindex].listProduct[i].getName() + " | "
+                                + QString::number(service.currentMeals[comboboxindex].listProduct[i].getGrams()) + " (g) | "
+                                + QString::number(service.currentMeals[comboboxindex].listProduct[i].getKcalByGrams()) + " | "
+                                + QString::number(service.currentMeals[comboboxindex].listProduct[i].getProteinByGrams()) + " | "
+                                + QString::number(service.currentMeals[comboboxindex].listProduct[i].getFatsByGrams()) + " | "
+                                + QString::number(service.currentMeals[comboboxindex].listProduct[i].getCarbohydratesByGrams()) + " | ");
     }}
 }
 
 void MainWindow::on_AddProductButton_clicked()
 {
+    //BK EDITED
     AddProductWindow addProductWindow(service, ui->comboBox->currentIndex(), this);
     addProductWindow.setModal(true);
     addProductWindow.exec();
-    setListWid();
+
+    //WE CAN USE THIS ONE
+    if(ui->listWidget->count()<service.currentMeals[ui->comboBox->currentIndex()].listProduct.size())
+    {
+        ui->listWidget->addItem(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getName() + " | "
+                + QString::number(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getGrams()) + " (g) | "
+                + QString::number(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getKcalByGrams()) + " | "
+                + QString::number(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getProteinByGrams()) + " | "
+                + QString::number(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getFatsByGrams()) + " | "
+                + QString::number(service.currentMeals[ui->comboBox->currentIndex()].listProduct.last().getCarbohydratesByGrams()) + " | ");
+    }
+    //OR THIS ONE
+    //setListWid();
 }
 
 //EDITED BK
@@ -85,9 +104,7 @@ void MainWindow::on_RemovMealpushButton_clicked()
 
 void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
 {
-    ui->comboBox->clear();
     setCombobox(date);
-    ui->listWidget->clear();
     setListWid();
 }
 
