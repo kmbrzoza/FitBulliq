@@ -1,13 +1,21 @@
 #include "editmealproductwindow.h"
-#include "ui_editmealproductwindow.h"
-#include "mainwindow.h"
 
-EditMealProductWindow::EditMealProductWindow(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::EditMealProductWindow)
+
+//EditMealProductWindow::EditMealProductWindow(QWidget *parent) :
+//    QDialog(parent),
+//    ui(new Ui::EditMealProductWindow)
+//{
+//    ui->setupUi(this);
+//}
+
+EditMealProductWindow::EditMealProductWindow(Service& service, int currentIndex, int currentRow, QWidget *parent) : QDialog(parent), ui(new Ui::EditMealProductWindow), service(service)
 {
     ui->setupUi(this);
+    this->currentRow=currentRow;
+    this->currentIndex=currentIndex;
+
 }
+
 
 EditMealProductWindow::~EditMealProductWindow()
 {
@@ -16,19 +24,23 @@ EditMealProductWindow::~EditMealProductWindow()
 
 void EditMealProductWindow::on_pushButton_clicked()
 {
-    MainWindow* parent = qobject_cast<MainWindow*>(this->parent());
-    int currentRow = parent->ui->listWidget->currentRow();
-    int currentIndex = parent->ui->comboBox->currentIndex();
-    int grams = ui->lineEdit->text().toUInt();
-    if(currentRow>=0 || currentIndex>=0)
-    {service.editMealProduct(currentIndex, currentRow, grams);}
-    parent->ui->listWidget->clear();
-    int comboboxindex = parent->ui->comboBox->currentIndex();
-    if(comboboxindex>=0){
-    for(int i=0;i<service.currentMeals[comboboxindex].listProduct.size();i++)
+    try
     {
-        parent->ui->listWidget->addItem(service.currentMeals[comboboxindex].listProduct[i].getName());
-    }}
-
+    unsigned int grams=ui->lineEdit->text().toUInt();
+    if(grams==0)
+    {
+        throw std::runtime_error("Error - Podaj ile gramów");
+    }
+    if(currentRow>=0 || currentIndex>=0)
+    service.editMealProduct(currentIndex, currentRow, grams);
     this->close();
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox message;
+        message.setWindowTitle("Error - editing meal product");
+        message.setText(e.what());
+        message.exec();
+    }
+
 }

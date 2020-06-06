@@ -1,5 +1,5 @@
 #include "addmealwindow.h"
-#include "ui_addmealwindow.h"
+
 //#include "ui_mainwindow.h"
 
 //AddMealWindow::AddMealWindow(QWidget *parent) :QDialog(parent),ui(new Ui::AddMealWindow)

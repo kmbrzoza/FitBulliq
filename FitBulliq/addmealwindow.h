@@ -2,6 +2,7 @@
 #define ADDMEALWINDOW_H
 
 #include <QDialog>
+#include "ui_addmealwindow.h"
 #include "service.h"
 namespace Ui
 {

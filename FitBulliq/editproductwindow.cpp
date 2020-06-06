@@ -1,12 +1,16 @@
 #include "editproductwindow.h"
-#include "ui_editproductwindow.h"
-#include "addproductwindow.h"
-#include "ui_addproductwindow.h"
-EditProductWindow::EditProductWindow(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::EditProductWindow)
+
+//EditProductWindow::EditProductWindow(QWidget *parent) :
+//    QDialog(parent),
+//    ui(new Ui::EditProductWindow)
+//{
+//    ui->setupUi(this);
+//}
+
+EditProductWindow::EditProductWindow(Service& service, int currentRow, QWidget *parent) :QDialog(parent), ui(new Ui::EditProductWindow), service(service)
 {
     ui->setupUi(this);
+    this->currentRow=currentRow;
 }
 
 EditProductWindow::~EditProductWindow()
@@ -16,21 +20,31 @@ EditProductWindow::~EditProductWindow()
 
 void EditProductWindow::on_pushButton_clicked()
 {
-    QString name = ui->lineEdit->text();
-    unsigned int kcal = ui->lineEdit_2->text().toUInt();
-    double protein = ui->lineEdit_3->text().toDouble();
-    double fats = ui->lineEdit_4->text().toDouble();
-    double carbohydrates = ui->lineEdit_5->text().toDouble();
-    AddProductWindow* parent = qobject_cast<AddProductWindow*>(this->parent());
-    int indexofRow=parent->ui->listWidget->currentRow();
-    if(indexofRow>=0)
+    try
     {
-    Product product=service.getProductClicked(indexofRow);
+    QString name = ui->lineEdit_2->text();
+    if(name.isEmpty())
+    {
+        throw std::runtime_error("Error - Musisz podac nazwe");
+    }
+    unsigned int kcal = ui->doubleSpinBox_5->value();
+    double protein = ui->doubleSpinBox_6->value();
+    double fats = ui->doubleSpinBox_7->value();
+    double carbohydrates = ui->doubleSpinBox_8->value();
+    if(currentRow>=0)
+    {
+    Product product=service.getProductClicked(currentRow);
     Product productEdited(name, kcal, protein, fats, carbohydrates);
     service.editProduct(product, productEdited);
-    parent->ui->listWidget->clear();
-    parent->ui->SearchlineEdit->clear();
+    this->close();
+    }
+    }
+    catch(std::exception &e)
+    {
+        QMessageBox message;
+        message.setWindowTitle("Error - editing product");
+        message.setText(e.what());
+        message.exec();
     }
 
-    this->close();
 }

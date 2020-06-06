@@ -43,6 +43,7 @@ void MainWindow::setCombobox(QDate date)
 
 void MainWindow::setListWid()
 {
+    ui->listWidget->clear();
     service.setProductsToMeals();
     int comboboxindex = ui->comboBox->currentIndex();
     if(comboboxindex>=0){
@@ -54,8 +55,10 @@ void MainWindow::setListWid()
 
 void MainWindow::on_AddProductButton_clicked()
 {
-    addProductWindow = new AddProductWindow(this);
-    addProductWindow->show();
+    AddProductWindow addProductWindow(service, ui->comboBox->currentIndex(), this);
+    addProductWindow.setModal(true);
+    addProductWindow.exec();
+    setListWid();
 }
 
 //EDITED BK
@@ -69,17 +72,13 @@ void MainWindow::on_AddMealButton_clicked()
 
 void MainWindow::on_RemovMealpushButton_clicked()
 {
-    ui->comboBox->clear();
-    QDate date = ui->dateEdit->date();
-    setCombobox(date);
+    setCombobox(ui->dateEdit->date());
     unsigned int index = ui->comboBox->currentIndex();
     if(ui->comboBox->currentIndex()>=0){//empty combobox has currentindex=-1
     service.removeMeal(index);
-    ui->comboBox->clear();
-    QDate date = ui->dateEdit->date();
-    setCombobox(date);
+    setCombobox(ui->dateEdit->date());
+    setListWid();
     }
-    ui->listWidget->clear();
 
 }
 
@@ -96,6 +95,8 @@ void MainWindow::on_dateEdit_userDateChanged(const QDate &date)
 
 void MainWindow::on_pushButton_clicked()
 {
-    editMealProductWindow = new EditMealProductWindow(this);
-    editMealProductWindow->show();
+    EditMealProductWindow editMealProductWindow(service, ui->comboBox->currentIndex(),ui->listWidget->currentRow(), this);
+    editMealProductWindow.setModal(true);
+    editMealProductWindow.exec();
+    setListWid();
 }

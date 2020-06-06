@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "service.h"
+#include "ui_editproductwindow.h"
 namespace Ui {
 class EditProductWindow;
 }
@@ -12,7 +13,7 @@ class EditProductWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditProductWindow(QWidget *parent = nullptr);
+    explicit EditProductWindow(Service &service, int currentRow, QWidget *parent = nullptr);
     ~EditProductWindow();
 
 private slots:
@@ -20,7 +21,8 @@ private slots:
 
 private:
     Ui::EditProductWindow *ui;
-    Service service;
+    Service &service;
+    int currentRow;
 };
 
 #endif // EDITPRODUCTWINDOW_H
