@@ -26,7 +26,7 @@ public:
 
     bool setPathOfDatabase(QString path); //setting path to file of database
     bool createTablesIfNotExist(); //creating tables if not exist
-
+    void closeDataBase(); //closing database
 
     QList<Meal> getMealsByDate(QDate date); //returning meals by date
     QList<Product> getProductsToMeal(Meal meal); //returning products of meal

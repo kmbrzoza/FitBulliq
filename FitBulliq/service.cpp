@@ -36,6 +36,11 @@ void Service::connectWithDatabase(QString path)
         message.exec();
     }
 }
+
+void Service::closeConnectionWithDatabase()
+{
+    repo.closeDataBase();
+}
 ///////////////////////////////
 
 
