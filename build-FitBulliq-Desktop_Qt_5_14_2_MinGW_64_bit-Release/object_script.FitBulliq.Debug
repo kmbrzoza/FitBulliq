@@ -1,0 +1,17 @@
+debug/addmealwindow.o
+debug/addownproductwindow.o
+debug/addproductwindow.o
+debug/editmealproductwindow.o
+debug/editproductwindow.o
+debug/main.o
+debug/mainwindow.o
+debug/meal.o
+debug/product.o
+debug/repository.o
+debug/service.o
+debug/moc_addmealwindow.o
+debug/moc_addownproductwindow.o
+debug/moc_addproductwindow.o
+debug/moc_editmealproductwindow.o
+debug/moc_editproductwindow.o
+debug/moc_mainwindow.o
