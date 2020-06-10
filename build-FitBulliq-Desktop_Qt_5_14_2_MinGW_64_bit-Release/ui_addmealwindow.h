@@ -13,58 +13,69 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
+#include <QtWidgets/QSpacerItem>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_AddMealWindow
 {
 public:
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout;
+    QSpacerItem *verticalSpacer;
     QFormLayout *formLayout;
     QFormLayout *formLayout_2;
     QLabel *label;
     QLineEdit *AddMealLineEdit;
     QPushButton *ConfirmButton;
+    QSpacerItem *verticalSpacer_2;
 
     void setupUi(QDialog *AddMealWindow)
     {
         if (AddMealWindow->objectName().isEmpty())
             AddMealWindow->setObjectName(QString::fromUtf8("AddMealWindow"));
         AddMealWindow->resize(395, 283);
-        AddMealWindow->setMinimumSize(QSize(395, 283));
-        AddMealWindow->setMaximumSize(QSize(395, 283));
+        AddMealWindow->setMaximumSize(QSize(1920, 1080));
         QFont font;
         font.setPointSize(9);
         AddMealWindow->setFont(font);
-        layoutWidget = new QWidget(AddMealWindow);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(70, 90, 281, 121));
-        formLayout = new QFormLayout(layoutWidget);
+        gridLayout = new QGridLayout(AddMealWindow);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
+
+        formLayout = new QFormLayout();
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setContentsMargins(0, 0, 0, 0);
         formLayout_2 = new QFormLayout();
         formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
-        label = new QLabel(layoutWidget);
+        label = new QLabel(AddMealWindow);
         label->setObjectName(QString::fromUtf8("label"));
 
         formLayout_2->setWidget(0, QFormLayout::LabelRole, label);
 
-        AddMealLineEdit = new QLineEdit(layoutWidget);
+        AddMealLineEdit = new QLineEdit(AddMealWindow);
         AddMealLineEdit->setObjectName(QString::fromUtf8("AddMealLineEdit"));
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, AddMealLineEdit);
 
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, formLayout_2);
+        formLayout->setLayout(0, QFormLayout::SpanningRole, formLayout_2);
 
-        ConfirmButton = new QPushButton(layoutWidget);
+        ConfirmButton = new QPushButton(AddMealWindow);
         ConfirmButton->setObjectName(QString::fromUtf8("ConfirmButton"));
 
-        formLayout->setWidget(1, QFormLayout::SpanningRole, ConfirmButton);
+        formLayout->setWidget(2, QFormLayout::SpanningRole, ConfirmButton);
+
+
+        gridLayout->addLayout(formLayout, 1, 0, 1, 1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer_2, 0, 0, 1, 1);
 
 
         retranslateUi(AddMealWindow);

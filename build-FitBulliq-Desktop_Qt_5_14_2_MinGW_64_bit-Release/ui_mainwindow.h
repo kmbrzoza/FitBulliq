@@ -59,9 +59,9 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+        MainWindow->setWindowModality(Qt::NonModal);
         MainWindow->resize(485, 462);
-        MainWindow->setMinimumSize(QSize(485, 462));
-        MainWindow->setMaximumSize(QSize(485, 462));
+        MainWindow->setMaximumSize(QSize(1920, 1080));
         QFont font;
         font.setPointSize(9);
         MainWindow->setFont(font);
@@ -150,6 +150,9 @@ public:
 
         listWidget = new QListWidget(centralwidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        QFont font1;
+        font1.setPointSize(10);
+        listWidget->setFont(font1);
 
         gridLayout->addWidget(listWidget, 1, 0, 1, 2);
 
@@ -202,7 +205,7 @@ public:
         label_3->setText(QCoreApplication::translate("MainWindow", "Makrosk\305\202adniki z posi\305\202ku:", nullptr));
         mealMacrolabel->setText(QString());
         label_4->setText(QCoreApplication::translate("MainWindow", "B: Bia\305\202ko T: T\305\202uszcze W: W\304\231glowodany", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Nazwa produktu | Ilosc | Kcal | Bia\305\202ko | T\305\202uszcze | W\304\231glowodany", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Nazwa produktu | Ilosc | Kcal | Bia\305\202ko (g) | T\305\202uszcze (g) | W\304\231glowodany (g)", nullptr));
         AddProductButton->setText(QCoreApplication::translate("MainWindow", "Dodaj produkt", nullptr));
         removeMealPrdctpushButton->setText(QCoreApplication::translate("MainWindow", "Usu\305\204 produkt", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Edytuj produkt", nullptr));

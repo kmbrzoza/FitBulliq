@@ -35,10 +35,10 @@ void AddProductWindow::setPrdListWid()
     for(int i=0;i<service.listProducts.size();i++)
     {
         ui->listWidget->addItem(service.listProducts[i].getName()+" | "
-                                +QString::number(service.listProducts[i].getKcal())+" | "
-                                +QString::number(service.listProducts[i].getProtein())+" | "
-                                +QString::number(service.listProducts[i].getFats())+" | "
-                                +QString::number(service.listProducts[i].getCarbohydrates()));
+                                +QString::number(service.listProducts[i].getKcal())+" Kcal | "
+                                +" B: "+QString::number(service.listProducts[i].getProtein())+" | "
+                                +" T: "+QString::number(service.listProducts[i].getFats())+" | "
+                                +" W: "+QString::number(service.listProducts[i].getCarbohydrates()));
     }
 }
 

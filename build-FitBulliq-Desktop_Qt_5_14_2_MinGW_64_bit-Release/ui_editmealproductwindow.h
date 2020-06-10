@@ -12,22 +12,27 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_EditMealProductWindow
 {
 public:
-    QPushButton *pushButton;
-    QWidget *layoutWidget;
+    QGridLayout *gridLayout;
+    QSpacerItem *verticalSpacer;
+    QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QLineEdit *lineEdit;
+    QPushButton *pushButton;
+    QSpacerItem *verticalSpacer_2;
 
     void setupUi(QDialog *EditMealProductWindow)
     {
@@ -39,24 +44,40 @@ public:
         QFont font;
         font.setPointSize(9);
         EditMealProductWindow->setFont(font);
-        pushButton = new QPushButton(EditMealProductWindow);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(130, 140, 80, 21));
-        layoutWidget = new QWidget(EditMealProductWindow);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(80, 90, 181, 24));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
+        gridLayout = new QGridLayout(EditMealProductWindow);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(layoutWidget);
+        label = new QLabel(EditMealProductWindow);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        lineEdit = new QLineEdit(layoutWidget);
+        lineEdit = new QLineEdit(EditMealProductWindow);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
         horizontalLayout->addWidget(lineEdit);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        pushButton = new QPushButton(EditMealProductWindow);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
+
+        gridLayout->addLayout(verticalLayout, 1, 0, 1, 1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer_2, 0, 0, 1, 1);
 
 
         retranslateUi(EditMealProductWindow);
@@ -67,8 +88,8 @@ public:
     void retranslateUi(QDialog *EditMealProductWindow)
     {
         EditMealProductWindow->setWindowTitle(QCoreApplication::translate("EditMealProductWindow", "Dialog", nullptr));
-        pushButton->setText(QCoreApplication::translate("EditMealProductWindow", "Edytuj", nullptr));
         label->setText(QCoreApplication::translate("EditMealProductWindow", "Wpisz gramy:", nullptr));
+        pushButton->setText(QCoreApplication::translate("EditMealProductWindow", "Edytuj", nullptr));
     } // retranslateUi
 
 };

@@ -248,6 +248,7 @@ Makefile: ../FitBulliq/FitBulliq.pro ../../../../Qt/5.14.2/mingw73_64/mkspecs/wi
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/win32-g++/qmake.conf \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/toolchain.prf \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/default_pre.prf \
@@ -277,7 +278,6 @@ Makefile: ../FitBulliq/FitBulliq.pro ../../../../Qt/5.14.2/mingw73_64/mkspecs/wi
 		../../../../Qt/5.14.2/mingw73_64/lib/Qt5Sql.prl \
 		../../../../Qt/5.14.2/mingw73_64/lib/Qt5Core.prl \
 		../../../../Qt/5.14.2/mingw73_64/lib/qtmain.prl \
-		.qmake.stash \
 		../../../../Qt/5.14.2/mingw73_64/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile ..\FitBulliq\FitBulliq.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/spec_pre.prf:
@@ -458,6 +458,7 @@ Makefile: ../FitBulliq/FitBulliq.pro ../../../../Qt/5.14.2/mingw73_64/mkspecs/wi
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/win32-g++/qmake.conf:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/toolchain.prf:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/default_pre.prf:
@@ -487,7 +488,6 @@ Makefile: ../FitBulliq/FitBulliq.pro ../../../../Qt/5.14.2/mingw73_64/mkspecs/wi
 ../../../../Qt/5.14.2/mingw73_64/lib/Qt5Sql.prl:
 ../../../../Qt/5.14.2/mingw73_64/lib/Qt5Core.prl:
 ../../../../Qt/5.14.2/mingw73_64/lib/qtmain.prl:
-.qmake.stash:
 ../../../../Qt/5.14.2/mingw73_64/mkspecs/features/build_pass.prf:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\FitBulliq\FitBulliq.pro -spec win32-g++ "CONFIG+=qtquickcompiler"

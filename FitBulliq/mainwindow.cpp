@@ -50,7 +50,7 @@ void MainWindow::setDayMacro()
         carbohydrates += service.currentMeals[j].listProduct[i].getCarbohydratesByGrams();
     }
     }
-    ui->dayMacrolabel->setText(" | "+ QString::number(calories) + " kcal | B: "+ QString::number(protein) + " | T:"+ QString::number(fats) + " | W: "+ QString::number(carbohydrates) + " | ");
+    ui->dayMacrolabel->setText(" | "+ QString::number(calories) + " Kcal | B: "+ QString::number(protein) + " | T:"+ QString::number(fats) + " | W: "+ QString::number(carbohydrates) + " | ");
     }
 }
 

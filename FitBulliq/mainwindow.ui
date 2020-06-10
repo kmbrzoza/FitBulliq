@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,16 +13,10 @@
     <height>462</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>485</width>
-    <height>462</height>
-   </size>
-  </property>
   <property name="maximumSize">
    <size>
-    <width>485</width>
-    <height>462</height>
+    <width>1920</width>
+    <height>1080</height>
    </size>
   </property>
   <property name="font">
@@ -125,12 +122,18 @@
      </layout>
     </item>
     <item row="1" column="0" colspan="2">
-     <widget class="QListWidget" name="listWidget"/>
+     <widget class="QListWidget" name="listWidget">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Nazwa produktu | Ilosc | Kcal | Białko | Tłuszcze | Węglowodany</string>
+       <string>Nazwa produktu | Ilosc | Kcal | Białko (g) | Tłuszcze (g) | Węglowodany (g)</string>
       </property>
      </widget>
     </item>
