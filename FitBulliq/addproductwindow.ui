@@ -28,6 +28,11 @@
     <height>381</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -36,8 +41,8 @@
     <rect>
      <x>10</x>
      <y>330</y>
-     <width>373</width>
-     <height>23</height>
+     <width>389</width>
+     <height>24</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -74,73 +79,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>80</y>
-     <width>183</width>
-     <height>177</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Kalorie:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Białka:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Tłuszcze:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Węglowodany:</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="rightMargin">
-       <number>40</number>
-      </property>
-      <item>
-       <widget class="QLineEdit" name="CalorieslineEdit"/>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="ProteinslineEdit"/>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="FatslineEdit"/>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="CarbohydrateslineEdit"/>
-      </item>
-     </layout>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
+     <x>310</x>
      <y>50</y>
      <width>81</width>
      <height>24</height>
@@ -196,13 +135,125 @@
     <rect>
      <x>10</x>
      <y>310</y>
-     <width>301</width>
+     <width>321</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>Nazwa produktu | Kcal | Białko | Tłuszcze | Węglowodany</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>312</x>
+     <y>92</y>
+     <width>161</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Kalorie:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="calorieslabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>kcal</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Białka:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="proteinlabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>g</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Tłuszcze:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="fatslabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>g</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Węglowodany:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QLabel" name="carbohydrateslabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>g</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

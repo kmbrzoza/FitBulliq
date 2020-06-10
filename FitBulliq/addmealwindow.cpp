@@ -13,6 +13,7 @@ AddMealWindow::AddMealWindow(Service& service, QDate date, QWidget *parent): QDi
 {
     ui->setupUi(this);
     this->date=date;
+    QWidget::setWindowTitle("FitBulliq - dodaj posiłek");
 }
 
 AddMealWindow::~AddMealWindow()

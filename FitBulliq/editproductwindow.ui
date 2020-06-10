@@ -22,6 +22,11 @@
     <height>294</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -65,7 +70,7 @@
     <rect>
      <x>30</x>
      <y>80</y>
-     <width>252</width>
+     <width>277</width>
      <height>142</height>
     </rect>
    </property>
@@ -135,7 +140,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="doubleSpinBox_8"/>
+       <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+        <property name="maximum">
+         <double>9999.989999999999782</double>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -151,21 +160,21 @@
       <item>
        <widget class="QLabel" name="label_16">
         <property name="text">
-         <string>mg/100g</string>
+         <string>g/100g</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_17">
         <property name="text">
-         <string>mg/100g</string>
+         <string>g/100g</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_18">
         <property name="text">
-         <string>mg/100g</string>
+         <string>g/100g</string>
         </property>
        </widget>
       </item>

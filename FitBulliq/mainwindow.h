@@ -41,11 +41,18 @@ private slots:
 
     void on_pushButton_clicked();//openning editmealproductwindow
 
+    void on_comboBox_currentIndexChanged();
+
+    void on_removeMealPrdctpushButton_clicked();
+
 private:
 
     //KG
+    void setMealMacro();
+    void setDayMacro();
     void setCombobox(QDate date);//setting meals by day in combobox
     void setListWid();//setting product to selected meal in listwidget
+
     AddProductWindow *addProductWindow; //related to opening new window (Dodaj produkt)
     //AddMealWindow addMealWindow; //related to opening new window (Dodaj Posilek)
     EditMealProductWindow *editMealProductWindow;//related to opening new window (Edytuj Produkt)

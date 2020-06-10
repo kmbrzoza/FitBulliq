@@ -54,11 +54,6 @@ bool Repository::createTablesIfNotExist()
 
     return true;
 }
-
-void Repository::closeDataBase()
-{
-    db.close();
-}
 ///////////////////////////////////////////////////
 
 

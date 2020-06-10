@@ -6,9 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>395</width>
+    <height>283</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>395</width>
+    <height>283</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>395</width>
+    <height>283</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,10 +33,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>100</y>
-     <width>241</width>
-     <height>101</height>
+     <x>70</x>
+     <y>90</y>
+     <width>281</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">

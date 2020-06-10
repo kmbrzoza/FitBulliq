@@ -1,3 +1,10 @@
+// FITBULLIQ - PROJECT PROGRAMOWANIE II
+// AUTHORS: BRZOZA KRZYSZTOF, GENDASZ KAMILA
+// shortcuts corresponding to the part of the code to the name
+// BK - BRZOZA KRZYSZTOF ; GK - GENDASZ KAMILA
+
+// KG IS RESPONSIBLE FOR THIS CODE
+
 #include "addownproductwindow.h"
 
 
@@ -11,6 +18,7 @@
 AddOwnProductWindow::AddOwnProductWindow(Service &service, QWidget *parent) :QDialog(parent), ui(new Ui::AddOwnProductWindow), service(service)
 {
     ui->setupUi(this);
+    QWidget::setWindowTitle("FitBulliq - dodaj swój produkt");
 }
 
 AddOwnProductWindow::~AddOwnProductWindow()

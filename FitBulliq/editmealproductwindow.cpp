@@ -1,3 +1,10 @@
+// FITBULLIQ - PROJECT PROGRAMOWANIE II
+// AUTHORS: BRZOZA KRZYSZTOF, GENDASZ KAMILA
+// shortcuts corresponding to the part of the code to the name
+// BK - BRZOZA KRZYSZTOF ; GK - GENDASZ KAMILA
+
+// KG IS RESPONSIBLE FOR THIS CODE
+
 #include "editmealproductwindow.h"
 
 
@@ -13,6 +20,7 @@ EditMealProductWindow::EditMealProductWindow(Service& service, int currentIndex,
     ui->setupUi(this);
     this->currentRow=currentRow;
     this->currentIndex=currentIndex;
+    QWidget::setWindowTitle("FitBulliq - edytuj produkt z posiłku");
 
 }
 

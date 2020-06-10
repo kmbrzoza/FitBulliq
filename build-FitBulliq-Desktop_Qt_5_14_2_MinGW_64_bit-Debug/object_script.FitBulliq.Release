@@ -1,0 +1,17 @@
+release/addmealwindow.o
+release/addownproductwindow.o
+release/addproductwindow.o
+release/editmealproductwindow.o
+release/editproductwindow.o
+release/main.o
+release/mainwindow.o
+release/meal.o
+release/product.o
+release/repository.o
+release/service.o
+release/moc_addmealwindow.o
+release/moc_addownproductwindow.o
+release/moc_addproductwindow.o
+release/moc_editmealproductwindow.o
+release/moc_editproductwindow.o
+release/moc_mainwindow.o

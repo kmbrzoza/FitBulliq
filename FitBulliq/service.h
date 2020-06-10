@@ -33,7 +33,6 @@ public:
 
     //Database
     void connectWithDatabase(QString path);
-    void closeConnectionWithDatabase();
 
     //Service&Repository
     void setMealsByDate(QDate date); //getting meals by date from repo and setting on currentMeals

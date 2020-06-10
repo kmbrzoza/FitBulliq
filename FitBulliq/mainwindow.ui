@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>376</height>
+    <width>485</width>
+    <height>462</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>485</width>
+    <height>462</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>485</width>
+    <height>462</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -19,7 +31,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QFormLayout" name="formLayout">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -59,7 +71,70 @@
       </item>
      </layout>
     </item>
-    <item row="3" column="0">
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Makroskładniki z dnia:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="dayMacrolabel">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Makroskładniki z posiłku:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="mealMacrolabel">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>B: Białko T: Tłuszcze W: Węglowodany</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::AutoText</enum>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QListWidget" name="listWidget"/>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Nazwa produktu | Ilosc | Kcal | Białko | Tłuszcze | Węglowodany</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QPushButton" name="AddProductButton">
@@ -69,7 +144,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="removeMealPrdctpushButton">
         <property name="text">
          <string>Usuń produkt</string>
         </property>
@@ -84,16 +159,6 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Nazwa produktu | Ilosc | Kcal | Białko | Tłuszcze | Węglowodany</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -101,7 +166,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>408</width>
+     <width>485</width>
      <height>20</height>
     </rect>
    </property>

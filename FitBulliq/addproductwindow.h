@@ -1,3 +1,9 @@
+// FITBULLIQ - PROJECT PROGRAMOWANIE II
+// AUTHORS: BRZOZA KRZYSZTOF, GENDASZ KAMILA
+// shortcuts corresponding to the part of the code to the name
+// BK - BRZOZA KRZYSZTOF ; GK - GENDASZ KAMILA
+
+// KG IS RESPONSIBLE FOR THIS CODE
 #ifndef ADDPRODUCTWINDOW_H
 #define ADDPRODUCTWINDOW_H
 
@@ -24,7 +30,7 @@ private slots:
 
     void on_AddOwnPrdctpushButton_clicked();//opening addownproductwindow
 
-    void on_SearchlineEdit_textChanged(const QString &arg1);//searching product ! ! !
+    void on_SearchlineEdit_textChanged(const QString &arg1);//searching product
 
     void on_AddProductpushButton_clicked();//adding selected product to meal
 
@@ -33,7 +39,9 @@ private slots:
     void on_EditProductpushButton_clicked();//opening editproductwindow
 
 
-private: 
+    void on_GramslineEdit_textChanged(const QString &arg1);
+
+private:
     Service &service;
     void setPrdListWid();
     int currentIndex;
